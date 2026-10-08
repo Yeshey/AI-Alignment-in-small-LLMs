@@ -1,0 +1,113 @@
+name: Build and Release PDF
+on:
+  push:
+    branches:
+      - main
+concurrency:
+  group: release-pdf
+  cancel-in-progress: true
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Free up disk space for Nix
+        uses: wimpysworld/nothing-but-nix@main
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache Nix store
+        uses: nix-community/cache-nix-action@v6
+        with:
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('flake.lock') }}
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          gc-max-store-size-linux: 2G
+          purge: true
+          purge-prefixes: nix-${{ runner.os }}-
+          purge-last-accessed: 604800 # 1 week in seconds
+
+      - name: Build PDF with Nix
+        run: |
+          if nix run; then
+            echo "✓ PDF successfully created without errors"
+          else
+            echo "⚠ Build had errors/warnings, checking if PDF was generated..."
+            if [ -f main.pdf ]; then
+              echo "✓ PDF was generated despite errors/warnings"
+            else
+              echo "✗ Build failed - no PDF generated"
+              exit 1
+            fi
+          fi
+
+      - name: Get timestamp for unique tag
+        id: timestamp
+        run: |
+          echo "tag=$(date +'%Y-%m-%d-%H%M%S')" >> $GITHUB_OUTPUT
+          echo "month=$(date +'%Y-%m')" >> $GITHUB_OUTPUT
+          echo "release_name=$(date +'%B %Y')" >> $GITHUB_OUTPUT
+
+      - name: Create new release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.timestamp.outputs.tag }}"
+          RELEASE_NAME="${{ steps.timestamp.outputs.release_name }}"
+          COMMIT_SHA="${{ github.sha }}"
+          COMMIT_SHORT="${COMMIT_SHA:0:7}"
+
+          echo "Creating new release $TAG..."
+          gh release create "$TAG" main.pdf \
+            --title "PDF Build - $RELEASE_NAME" \
+            --notes "Automated PDF build from commit $COMMIT_SHORT ($(date +'%Y-%m-%d %H:%M:%S'))"
+
+      - name: Clean up old releases (keep only latest per month)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Fetching all releases..."
+          gh release list --limit 1000 --json tagName,createdAt > releases.json
+
+          declare -A latest_per_month
+
+          # Find the latest release for each month
+          while IFS= read -r line; do
+            tag=$(echo "$line" | jq -r '.tagName')
+            created=$(echo "$line" | jq -r '.createdAt')
+            month="${tag:0:7}"  # Extract YYYY-MM
+
+            if [ -z "${latest_per_month[$month]}" ] || [[ "$created" > "${latest_per_month[$month]}" ]]; then
+              latest_per_month[$month]="$created|$tag"
+            fi
+          done < <(jq -c '.[]' releases.json)
+
+          # Delete all releases except the latest per month
+          while IFS= read -r line; do
+            tag=$(echo "$line" | jq -r '.tagName')
+            created=$(echo "$line" | jq -r '.createdAt')
+            month="${tag:0:7}"
+
+            latest_info="${latest_per_month[$month]}"
+            latest_tag="${latest_info#*|}"
+
+            if [ "$tag" != "$latest_tag" ]; then
+              echo "Deleting older release: $tag (keeping $latest_tag for $month)"
+              gh release delete "$tag" -y || echo "Failed to delete $tag"
+            else
+              echo "Keeping latest release for $month: $tag"
+            fi
+          done < <(jq -c '.[]' releases.json)
+
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-pdf
+          path: main.pdf
+          retention-days: 7
