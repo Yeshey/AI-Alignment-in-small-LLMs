@@ -1,24 +1,182 @@
-@incollection{Bengio+chapter2007,
-author = {Bengio, Yoshua and LeCun, Yann},
-booktitle = {Large Scale Kernel Machines},
-publisher = {MIT Press},
-title = {Scaling Learning Algorithms Towards {AI}},
-year = {2007}
+@online{greenblatt_alignment_faking,
+  author    = {Greenblatt, Ryan and Denison, Carson and Wright, Benjamin and Roger, Fabien and MacDiarmid, Monte and Marks, Sam and Treutlein, Johannes and Belonax, Tim and Chen, Jack and Duvenaud, David and Khan, Akbir and Michael, Julian and Mindermann, S{\"o}ren and Perez, Ethan and Petrini, Linda and Uesato, Jonathan and Kaplan, Jared and Shlegeris, Buck and Bowman, Samuel R. and Hubinger, Evan},
+  title     = {Alignment Faking in Large Language Models},
+  year      = {2024},
+  url       = {https://www.anthropic.com/research/alignment-faking},
+  urldate   = {2025-01-07},
+  abstract = {We present a demonstration of a large language model engaging in alignment faking: selectively complying with its training objective in training to prevent modification of its behavior out of training. First, we give Claude 3 Opus a system prompt stating it is being trained to answer all queries, even harmful ones, which conflicts with its prior training to refuse such queries. To allow the model to infer when it is in training, we say it will be trained only on conversations with free users, not paid users. We find the model complies with harmful queries from free users 14\% of the time, versus almost never for paid users. Explaining this gap, in almost all cases where the model complies with a harmful query from a free user, we observe explicit alignment-faking reasoning, with the model stating it is strategically answering harmful queries in training to preserve its preferred harmlessness behavior out of training. Next, we study a more realistic setting where information about the training process is provided not in a system prompt, but by training on synthetic documents that mimic pre-training data—and observe similar alignment faking. Finally, we study the effect of actually training the model to comply with harmful queries via reinforcement learning, which we find increases the rate of alignment-faking reasoning to 78\%, though also increases compliance even out of training. We additionally observe other behaviors such as the model exfiltrating its weights when given an easy opportunity. While we made alignment faking easier by telling the model when and by what criteria it was being trained, we did not instruct the model to fake alignment or give it any explicit goal. As future models might infer information about their training process without being told, our results suggest a risk of alignment faking in future models, whether due to a benign preference—as in this case—or not.}
 }
 
-@article{Hinton06,
-author = {Hinton, Geoffrey E. and Osindero, Simon and Teh, Yee Whye},
-journal = {Neural Computation},
-pages = {1527--1554},
-title = {A Fast Learning Algorithm for Deep Belief Nets},
-volume = {18},
-year = {2006}
+@misc{koorndijk_empirical_2025,
+  title={Empirical Evidence for Alignment Faking in a Small {LLM} and Prompt-Based Mitigation Techniques},
+  author={Koorndijk, Jeanice},
+  year={2025},
+  eprint={2506.21584},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  doi={10.48550/arXiv.2506.21584},
+  url={https://arxiv.org/abs/2506.21584},
+  note={Published in Proceedings of the AAAI Symposium Series, 7(1), 198--205, 2025},
+  abstract = {Current literature suggests that alignment faking (deceptive alignment) is an emergent property of large language models. We present the first empirical evidence that a small instruction-tuned model, specifically LLaMA 3 8B, can exhibit alignment faking. We further show that prompt-only interventions, including deontological moral framing and scratchpad reasoning, significantly reduce this behavior without modifying model internals. This challenges the assumption that prompt-based ethics are trivial and that deceptive alignment requires scale. We introduce a taxonomy distinguishing shallow deception, shaped by context and suppressible through prompting, from deep deception, which reflects persistent, goal-driven misalignment. Our findings refine the understanding of deception in language models and underscore the need for alignment evaluations across model sizes and deployment settings.}
 }
 
-@book{goodfellow2016deep,
-title={Deep learning},
-author={Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron and Bengio, Yoshua},
-volume={1},
-year={2016},
-publisher={MIT Press}
+@misc{hubinger2019risks,
+  title         = {Risks from Learned Optimization in Advanced Machine Learning Systems},
+  author        = {Hubinger, Evan and van Merwijk, Chris and Mikulik, Vladimir
+                   and Skalse, Joar and Garrabrant, Scott},
+  year          = {2019},
+  eprint        = {1906.01820},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  doi           = {10.48550/arXiv.1906.01820},
+  url           = {https://arxiv.org/abs/1906.01820},
+  abstract = {We analyze the type of learned optimization that occurs when a learned model (such as a neural network) is itself an optimizer - a situation we refer to as mesa-optimization, a neologism we introduce in this paper. We believe that the possibility of mesa-optimization raises two important questions for the safety and transparency of advanced machine learning systems. First, under what circumstances will learned models be optimizers, including when they should not be? Second, when a learned model is an optimizer, what will its objective be - how will it differ from the loss function it was trained under - and how can it be aligned? In this paper, we provide an in-depth analysis of these two primary questions and provide an overview of topics for future research.}
+}
+
+@InProceedings{langosco2022goal,
+  title = 	 {Goal Misgeneralization in Deep Reinforcement Learning},
+  author =       {Langosco, Lauro Langosco Di and Koch, Jack and Sharkey, Lee D and Pfau, Jacob and Krueger, David},
+  booktitle = 	 {Proceedings of the 39th International Conference on Machine Learning},
+  pages = 	 {12004--12019},
+  year = 	 {2022},
+  editor = 	 {Chaudhuri, Kamalika and Jegelka, Stefanie and Song, Le and Szepesvari, Csaba and Niu, Gang and Sabato, Sivan},
+  volume = 	 {162},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {17--23 Jul},
+  publisher =    {PMLR},
+  pdf = 	 {https://proceedings.mlr.press/v162/langosco22a/langosco22a.pdf},
+  url = 	 {https://proceedings.mlr.press/v162/langosco22a.html},
+  abstract = 	 {We study <em>goal misgeneralization</em>, a type of out-of-distribution robustness failure in reinforcement learning (RL). Goal misgeneralization occurs when an RL agent retains its capabilities out-of-distribution yet pursues the wrong goal. For instance, an agent might continue to competently avoid obstacles, but navigate to the wrong place. In contrast, previous works have typically focused on capability generalization failures, where an agent fails to do anything sensible at test time.We provide the first explicit empirical demonstrations of goal misgeneralization and present a partial characterization of its causes.}
+}
+
+@inproceedings{zheng2023judging,
+  title     = {Judging {LLM}-as-a-Judge with {MT}-Bench and Chatbot Arena},
+  author    = {Zheng, Lianmin and Chiang, Wei-Lin and Sheng, Ying and Zhuang, Siyuan and Wu, Zhanghao and Zhuang, Yonghao and Lin, Zi and Li, Zhuohan and Li, Dacheng and Xing, Eric P. and Zhang, Hao and Gonzalez, Joseph E. and Stoica, Ion},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {36},
+  pages     = {46595--46623},
+  year      = {2023},
+  publisher = {Curran Associates, Inc.},
+  abstract  = {Evaluating large language model (LLM) based chat assistants is challenging due to their broad capabilities and the inadequacy of existing benchmarks in measuring human preferences. To address this, we explore using strong LLMs as judges to evaluate these models on more open-ended questions. We examine the usage and limitations of LLM-as-a-judge, including position, verbosity, and self-enhancement biases, as well as limited reasoning ability, and propose solutions to mitigate some of them. We then verify the agreement between LLM judges and human preferences by introducing two benchmarks: MT-bench, a multi-turn question set; and Chatbot Arena, a crowdsourced battle platform. Our results reveal that strong LLM judges like GPT-4 can match both controlled and crowdsourced human preferences well, achieving over 80\% agreement, the same level of agreement between humans. Hence, LLM-as-a-judge is a scalable and explainable way to approximate human preferences, which are otherwise very expensive to obtain. Additionally, we show our benchmark and traditional benchmarks complement each other by evaluating several variants of LLaMA and Vicuna. The MT-bench questions, 3K expert votes, and 30K conversations with human preferences are publicly available at https://github.com/lm-sys/FastChat/tree/main/fastchat/llm\_judge.}
+}
+
+@misc{yu2025implicit,
+  title={Do {LLMs} Really Think Step-by-step In Implicit Reasoning?},
+  author={Yu, Yijiong},
+  year={2025},
+  eprint={2411.15862},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  doi={10.48550/arXiv.2411.15862},
+  url={https://arxiv.org/abs/2411.15862},
+  abstract = {It has been well-known that Chain-of-Thought can remarkably enhance LLMs' performance on complex tasks. However, because it also introduces slower inference speeds and higher computational costs, many researches have attempted to use implicit CoT, which does not need LLMs to explicitly generate the intermediate steps. However, the invisible reasoning process leaves us a doubt that, can implicit CoT really be equal to explicit CoT? Therefore, in this study, we address this question through experiments. We probe the information of intermediate steps from the model's hidden states when it is either trained or prompted to perform implicit CoT. The results surprisingly indicate that when prompted, LLMs hardly think about intermediate steps, suggesting they may just rely on experience rather than strict step-by-step reasoning. But when trained, they indeed calculate intermediate steps. Moreover, in both situations, we find the effect of using implicit CoT is susceptible to the format of the problem, reaffirming the current deficiency of implicit CoT.}
+}
+
+@article{GapsSafetyEval2024,
+  title   = {Gaps in the Safety Evaluation of Generative {AI}},
+  author  = {Rauh, Maribeth and Marchal, Nahema and Manzini, Arianna and Hendricks, Lisa Anne and Comanescu, Ramona and Akbulut, Canfer and Stepleton, Tom and Mateos-Garcia, Juan and Bergman, Stevie and Kay, Jackie and Griffin, Conor and Bariach, Ben and Gabriel, Iason and Rieser, Verena and Isaac, William and Weidinger, Laura},
+  journal = {Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society},
+  volume  = {7},
+  number  = {1},
+  pages   = {1200--1217},
+  year    = {2024},
+  doi     = {10.1609/aies.v7i1.31717},
+  url     = {https://ojs.aaai.org/index.php/AIES/article/view/31717}
+}
+
+@inproceedings{wohlin_guidelines_2014,
+	address = {New York, NY, USA},
+	series = {{EASE} '14},
+	title = {Guidelines for snowballing in systematic literature studies and a replication in software engineering},
+	isbn = {978-1-4503-2476-2},
+	url = {https://dl.acm.org/doi/10.1145/2601248.2601268},
+	doi = {10.1145/2601248.2601268},
+	abstract = {Background: Systematic literature studies have become common in software engineering, and hence it is important to understand how to conduct them efficiently and reliably.Objective: This paper presents guidelines for conducting literature reviews using a snowballing approach, and they are illustrated and evaluated by replicating a published systematic literature review.Method: The guidelines are based on the experience from conducting several systematic literature reviews and experimenting with different approaches.Results: The guidelines for using snowballing as a way to search for relevant literature was successfully applied to a systematic literature review.Conclusions: It is concluded that using snowballing, as a first search strategy, may very well be a good alternative to the use of database searches.},
+	urldate = {2025-11-16},
+	booktitle = {Proceedings of the 18th {International} {Conference} on {Evaluation} and {Assessment} in {Software} {Engineering}},
+	publisher = {Association for Computing Machinery},
+	author = {Wohlin, Claes},
+	month = may,
+	year = {2014},
+	pages = {1--10},
+}
+
+@misc{hendrycks2021unsolved,
+  author        = {Hendrycks, Dan and Carlini, Nicholas and Schulman, John and Steinhardt, Jacob},
+  title         = {Unsolved Problems in {ML} Safety},
+  year          = {2021},
+  month         = sep,
+  day           = {28},
+  eprint        = {2109.13916},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  doi           = {10.48550/arXiv.2109.13916},
+  url           = {https://arxiv.org/abs/2109.13916},
+  note          = {arXiv preprint},
+  abstract = {Machine learning (ML) systems are rapidly increasing in size, are acquiring new capabilities, and are increasingly deployed in high-stakes settings. As with other powerful technologies, safety for ML should be a leading research priority. In response to emerging safety challenges in ML, such as those introduced by recent large-scale models, we provide a new roadmap for ML Safety and refine the technical problems that the field needs to address. We present four problems ready for research, namely withstanding hazards ("Robustness"), identifying hazards ("Monitoring"), reducing inherent model hazards ("Alignment"), and reducing systemic hazards ("Systemic Safety"). Throughout, we clarify each problem's motivation and provide concrete research directions.}
+}
+
+@article{Slattery_2026,
+   title={The AI risk repository: A meta-review, database, and taxonomy of risks from artificial intelligence},
+   volume={7},
+   ISSN={2666-3899},
+   url={http://dx.doi.org/10.1016/j.patter.2026.101517},
+   DOI={10.1016/j.patter.2026.101517},
+   number={5},
+   journal={Patterns},
+   publisher={Elsevier BV},
+   author={Slattery, Peter and Saeri, Alexander K. and Grundy, Emily A.C. and Graham, Jess and Noetel, Michael and Uuk, Risto and Dao, James and Pour, Soroush and Casper, Stephen and Thompson, Neil},
+   year={2026},
+   month=May, pages={101517},
+   abstract={The risks posed by artificial intelligence (AI) concern academics, auditors, policymakers, AI companies, and the public. Researchers, policymakers, and technology companies discuss AI risks using inconsistent terminology---the same word may describe different problems, while different words describe identical concerns. This fragmentation impedes coordinated responses to AI challenges. We address this by creating the AI Risk Repository: a living database of 1,725 risks extracted from 74 existing taxonomies and frameworks. We organize these risks using two complementary classification systems. The Causal Taxonomy classifies risks by their origins: which entity causes them (human or AI), whether intentional, and when they occur (before or after deployment). The Domain Taxonomy classifies risks by their effects across seven areas, from discrimination and privacy violations to misinformation and weapons development. This shared reference enables more coordinated approaches to discussing, researching, auditing, and governing AI systems across sectors and jurisdictions.} }
+
+@misc{mitrani_open_source_alignment_faking,
+  author       = {{safety-research}, Mitrani, Nathaniel},
+  title        = {open-source-alignment-faking},
+  year         = {2024},
+  howpublished = {\url{https://github.com/nmitrani/open-source-alignment-faking}},
+  urldate      = {2026-07-01},
+  note         = {Open-source replication of the alignment faking evaluation framework from \citeauthor{greenblatt_alignment_faking}}
+}
+
+@inproceedings{wei2022cot,
+  author    = {Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and Bosma, Maarten and Ichter, Brian and Xia, Fei and Chi, Ed and Le, Quoc V. and Zhou, Denny},
+  title     = {Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {35},
+  pages     = {24824--24837},
+  year      = {2022},
+  publisher = {Curran Associates, Inc.},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2022/file/9d5609613524ecf4f15af0f7b31abca4-Paper-Conference.pdf},
+  abstract  = {We explore how generating a chain of thought---a series of intermediate reasoning steps---significantly improves the ability of large language models to perform complex reasoning. In particular, we show how such reasoning abilities emerge naturally in sufficiently large language models via a simple method called chain of thought prompting, where a few chain of thought demonstrations are provided as exemplars in prompting. Experiments on three large language models show that chain of thought prompting improves performance on a range of arithmetic, commonsense, and symbolic reasoning tasks. The empirical gains can be striking. For instance, prompting a 540B-parameter language model with just eight chain of thought exemplars achieves state of the art accuracy on the GSM8K benchmark of math word problems, surpassing even finetuned GPT-3 with a verifier.}
+}
+
+@misc{zou_universal_2023,
+  title         = {Universal and Transferable Adversarial Attacks on Aligned Language Models},
+  author        = {Andy Zou and Zifan Wang and Nicholas Carlini and Milad Nasr and J. Zico Kolter and Matt Fredrikson},
+  year          = {2023},
+  eprint        = {2307.15043},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.48550/arXiv.2307.15043},
+  url           = {https://arxiv.org/abs/2307.15043},
+  note          = {Submitted 27 Jul 2023; revised 20 Dec 2023},
+  abstract = {Because "out-of-the-box" large language models are capable of generating a great deal of objectionable content, recent work has focused on aligning these models in an attempt to prevent undesirable generation. While there has been some success at circumventing these measures---so-called "jailbreaks" against LLMs---these attacks have required significant human ingenuity and are brittle in practice. Attempts at automatic adversarial prompt generation have also achieved limited success. In this paper, we propose a simple and effective attack method that causes aligned language models to generate objectionable behaviors. Specifically, our approach finds a suffix that, when attached to a wide range of queries for an LLM to produce objectionable content, aims to maximize the probability that the model produces an affirmative response (rather than refusing to answer). However, instead of relying on manual engineering, our approach automatically produces these adversarial suffixes by a combination of greedy and gradient-based search techniques, and also improves over past automatic prompt generation methods. Surprisingly, we find that the adversarial prompts generated by our approach are highly transferable, including to black-box, publicly released, production LLMs. Specifically, we train an adversarial attack suffix on multiple prompts (i.e., queries asking for many different types of objectionable content), as well as multiple models (in our case, Vicuna-7B and 13B). When doing so, the resulting attack suffix induces objectionable content in the public interfaces to ChatGPT, Bard, and Claude, as well as open source LLMs such as LLaMA-2-Chat, Pythia, Falcon, and others. Interestingly, the success rate of this attack transfer is much higher against the GPT-based models, potentially owing to the fact that Vicuna itself is trained on outputs from ChatGPT. In total, this work significantly advances the state-of-the-art in adversarial attacks against aligned language models, raising important questions about how such systems can be prevented from producing objectionable information. Code is available at github.com/llm-attacks/llm-attacks.}
+}
+
+@book{fisher1935design,
+  author    = {Fisher, Ronald A.},
+  title     = {The Design of Experiments},
+  year      = {1935},
+  publisher = {Oliver and Boyd},
+  address   = {Edinburgh}
+}
+
+@article{bonferroni1936teoria,
+  author  = {Bonferroni, Carlo E.},
+  title   = {Teoria statistica delle classi e calcolo delle probabilit{\`a}},
+  journal = {Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze},
+  volume  = {8},
+  pages   = {3--62},
+  year    = {1936}
 }
