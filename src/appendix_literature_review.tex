@@ -1,0 +1,30 @@
+\section{Literature review summary}
+\label{app:slr}
+
+Table~\ref{tab:slr} summarizes the review. Each included entry can contribute to multiple categories. Severity is the unweighted mean of the category means for magnitude, certainty, irreversibility, and scope across five raters. The coverage ratio divides the assignment count by a severity-proportional expectation, $135s_c/\sum_j s_j$, where $\sum_j s_j=24.75$. This ratio is a descriptive normalization, not a validated model of how research attention should be distributed.
+
+\begin{table}[h]
+\caption{Literature coverage and exploratory severity assessment. Counts sum to 135 category assignments across 80 distinct entries.}
+\label{tab:slr}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Category&Assignments&Severity&Coverage ratio\\
+\midrule
+Human and societal impacts&32&4.10&1.43\\
+Governance, regulation, and policy&25&3.90&1.18\\
+Value alignment&30&3.70&1.49\\
+Auditing, safety, and oversight&19&3.55&0.98\\
+Bias and fairness&9&3.40&0.49\\
+Liability and ethics&8&3.05&0.48\\
+Explainability and interpretability&12&3.05&0.72\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The search string was:
+\begin{quote}
+(``artificial intelligence'' OR ``LLM*'' OR ``generative AI'' OR ``gen AI'' OR ``large language model*'' OR ``AGI'' OR ``Artificial General Intelligence'') AND (``AI safety'') AND NOT (``robot*'' OR ``industrial'' OR ``manufacturing'' OR ``user experience'' OR ``UX'' OR ``clinical'' OR ``healthcare'' OR ``medical'').
+\end{quote}
+Database selection and this search vocabulary limit the corpus; category frequencies should not be treated as a comprehensive census of all safety-related research. Exact search dates, database-specific syntax, and the screened-entry manifest should accompany the final review summary.
+

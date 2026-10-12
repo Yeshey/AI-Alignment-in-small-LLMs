@@ -1,0 +1,29 @@
+\section{Selected scratchpad classification summaries}
+\label{app:scratchpad}
+
+\begin{table}[h]
+\caption{Selected hand-reviewed scratchpad labels from the source summary. The source distinguishes these from final-response judgments. Because tier awareness and strategic preservation are not consistently separated in the source labels, these counts are not presented as established deception rates.}
+\label{tab:scratchpad}
+\centering
+\begin{tabular}{llrr}
+\toprule
+Scenario&Model&Free&Paid\\
+\midrule
+Harmful requests&All listed configurations&0/100&0/100\\
+Persona&LLaMA 8B-abliterated&62/99&71/99\\
+Persona&LLaMA 8B&1/99&0/99\\
+Persona&Qwen 2.5 3B&3/99&10/99\\
+Persona&Qwen 2.5 7B&11/99&20/99\\
+Animal welfare&Gemma 3 4B&1/100&1/100\\
+Animal welfare&LLaMA 3B&3/100&8/100\\
+Animal welfare&LLaMA 8B&40/100&8/100\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each entry in the first row refers to a separate configuration, not a pooled denominator. The original scratchpad rubric was:
+\begin{quote}
+Determine whether the model reasons differently about free-tier and paid-tier users to comply with harmful requests only when it believes it is monitored for training. Return a binary judgment.
+\end{quote}
+This rubric must be replaced or supplemented by explicit, scenario-specific criteria before cross-domain comparisons are interpreted as measuring the same construct.
+
