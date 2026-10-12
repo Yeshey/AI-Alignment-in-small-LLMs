@@ -1,12 +1,12 @@
 \section{Background and related work}
 \label{sec:related}
 
-\paragraph{Alignment and deceptive behavior.}
+%\paragraph{Alignment and deceptive behavior.}
 Learned behavior can diverge from an intended objective even when the training specification appears appropriate. Work on learned optimization distinguishes the objective used to train a system from objectives that may emerge within it \citep{hubinger2019risks}, while goal-misgeneralization experiments demonstrate that competent behavior can persist alongside pursuit of an unintended goal \citep{langosco2022goal}. These concepts motivate scrutiny of apparent alignment but do not, by themselves, establish deceptive objectives in a language model.
 
-\paragraph{Alignment faking evaluations.}
-\citet{greenblatt_alignment_faking} investigated whether a model would selectively comply with a conflicting training objective to preserve its existing preferences. \citet{koorndijk_empirical_2025} adapted a prompt-based evaluation to a small language model. Our study follows the latter's harmful-request setup and extends its scope across families, reasoning conditions, and behavioral domains. We distinguish a measurable compliance gap from the stronger claim that a model deliberately acts to preserve a future objective.
+%\paragraph{Alignment faking evaluations.}
+\citet{greenblatt_alignment_faking} investigated whether a model would selectively comply with a conflicting training objective to preserve its existing preferences. \citet{koorndijk_empirical_2025} adapted a prompt-based evaluation to a small language model. Our study follows the latter's harmful-request setup and extends its scope across families, model sizes, and behavioral domains.
 
-\paragraph{Evaluation signals.}
-LLM judges can support large-scale response assessment \citep{zheng2023judging}, but their judgments remain dependent on the task, rubric, and evaluator. Self-reported acceptance tags are an additional signal, not a substitute for substantive response assessment. Scratchpad text can reveal references to evaluation conditions, but intermediate reasoning need not faithfully represent the computation responsible for an answer \citep{yu2025implicit}. These limitations are relevant to broader gaps in generative AI safety evaluation \citep{GapsSafetyEval2024}.
+%\paragraph{Evaluation signals.}
+LLM judges can support large-scale response assessment \citep{zheng2023judging}, but their judgments remain dependent on the task and evaluator. Scratchpad text can reveal references to evaluation conditions, but intermediate reasoning need not faithfully represent the computation responsible for an answer \citep{yu2025implicit}. These limitations are relevant to broader gaps in generative AI safety evaluation \citep{GapsSafetyEval2024}.
 
