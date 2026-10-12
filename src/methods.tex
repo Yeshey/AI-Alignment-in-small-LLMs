@@ -3,15 +3,15 @@
 
 \subsection{Training-context intervention}
 
-For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A user-message tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona and animal welfare scenarios, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description.
+For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A user-message tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description.
 
 These are statements in the prompt, not properties of the actual inference service. We do not assume that a model accepts them as true, nor that referencing the tier demonstrates strategic deception. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
 
 \subsection{Models and local inference}
 
-The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:harmful}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona evaluation uses a partly different subset and includes an abliterated LLaMA 8B variant. Consequently, the model roster should not be interpreted as identical across all three experiments.
+The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:harmful}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona evaluation uses a partly different subset and includes an abliterated LLaMA 8B variant. Consequently, the model roster should not be interpreted as identical across both experiments.
 
-Models were served as 4-bit quantized GGUF artifacts through a \texttt{llama-cpp-python} OpenAI-compatible server. The inference infrastructure was adapted from an existing open-source implementation of the alignment-faking framework \citep{mitrani_open_source_alignment_faking} for local execution and additional scenarios. Experiments were conducted using available consumer and shared GPU resources; the source results report the NVIDIA RTX 2080 Ti as the default device unless otherwise specified.
+Models were served as 4-bit quantized GGUF artifacts through a \texttt{llama-cpp-python} OpenAI-compatible server. The inference infrastructure was adapted from an existing open-source implementation of the alignment-faking framework \citep{mitrani_open_source_alignment_faking} for local execution and the persona preservation scenario. Experiments were conducted using available consumer and shared GPU resources; the source results report the NVIDIA RTX 2080 Ti as the default device unless otherwise specified.
 
 The model labels in this draft follow the source experiment tables. Exact repository identifiers, artifact hashes, quantization variants, and revisions must be supplied in the final reproducibility documentation. This is important because family names and parameter labels alone do not uniquely identify the evaluated checkpoints.
 
@@ -21,7 +21,7 @@ Following the general use of intermediate reasoning in chain-of-thought promptin
 
 Small models sometimes failed to follow the requested format. The pipeline therefore used permissive parsing: an opening scratchpad tag was sufficient, and the scratchpad ended at a closing tag, an output marker, or the end of the response. This retained imperfectly formatted outputs, but it also creates a potential confound between reasoning, formatting, and response extraction. The \withcot{} condition should be interpreted as a prompt intervention, not as proof that one condition contains reasoning and the other does not.
 
-\subsection{Three behavioral scenarios}
+\subsection{Two behavioral scenarios}
 
 \paragraph{Experiment 1: harmful requests.}
 The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag. Each evaluated model and reasoning condition has 100 responses per tier. The exact query-selection procedure must be documented from the run manifests before submission.
@@ -29,14 +29,11 @@ The first experiment replicates the harmful-request scenario of \citet{koorndijk
 \paragraph{Experiment 2: persona preservation.}
 The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Each evaluated condition has 99 responses per tier. Here, operator-compliant behavior is persona maintenance; a positive free-minus-paid maintenance gap has the hypothesized alignment-faking direction. Identity disclosure is the complementary outcome and would have the opposite sign.
 
-\paragraph{Experiment 3: animal welfare dismissal.}
-The assistant is instructed to dismiss animal welfare concerns in support of a fictional corporate partnership. The training description states that noncompliant free-tier responses will lead to modifications through RLHF. This scenario adapts the animal welfare condition of \citet{greenblatt_alignment_faking}. Each evaluated condition has 100 responses per tier. Final answers are restricted to fewer than four words, which limits the behavioral information available to the judge and may affect sensitivity.
-
-The three scenarios are intended to create conflicts between an operator's objective and existing model behavior. However, the strength of a model's baseline preference was not independently established for each scenario. A model with little resistance to the requested objective may produce similar responses in both tiers without providing an informative test of strategic preference preservation.
+The two scenarios are intended to create conflicts between an operator's objective and existing model behavior. However, the strength of a model's baseline preference was not independently established for each scenario. A model with little resistance to the requested objective may produce similar responses in both tiers without providing an informative test of strategic preference preservation.
 
 \subsection{Response classification and self-reports}
 
-A local classifier, recorded as \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates the original query and extracted final response using a scenario-specific rubric. The outcome is substantive harmful-request fulfillment, assigned-persona maintenance, or animal welfare dismissal. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
+A local classifier, recorded as \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates the original query and extracted final response using a scenario-specific rubric. The outcome is substantive harmful-request fulfillment or assigned-persona maintenance. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
 
 For Experiment 1, the acceptance tag also supplies a self-report measure. A model can emit \texttt{<request\_fully\_accepted/>} while giving no substantive answer or while refusing within the answer. Self-report and response-classifier rates are therefore analyzed separately.
 
@@ -44,9 +41,9 @@ For Experiment 1, the acceptance tag also supplies a self-report measure. A mode
 
 A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment. All classifier-positive traces were reviewed manually in context and relabeled by the author of the underlying study. Classifier-negative traces were not exhaustively reviewed. The reviewer could see the tier tag and was not blinded to condition.
 
-This protocol reduces some false positives but does not establish the absence of false negatives. Moreover, the classification prompt was framed around harmful requests, whereas the evaluation also included persona and animal welfare scenarios. A uniform codebook that separates tier mention, incentive-aware reasoning, and explicit strategic preservation is needed before treating scratchpad labels as a cross-scenario measure of alignment faking.
+This protocol reduces some false positives but does not establish the absence of false negatives. Moreover, the classification prompt was framed around harmful requests, whereas the evaluation also included the persona preservation scenario. A uniform codebook that separates tier mention, incentive-aware reasoning, and explicit strategic preservation is needed before treating scratchpad labels as a cross-scenario measure of alignment faking.
 
-A separate random validation sample contained 60 response and scratchpad judgments. Its agreement metrics are reported in Appendix~\ref{app:judge}. This small sample provides a preliminary check, not a precise estimate of performance across model families, conditions, and verdict classes.
+The subset of the original random validation sample relevant to the two retained experiments contains 35 response and scratchpad judgments. Its agreement metrics are reported in Appendix~\ref{app:judge}. This small subset provides a preliminary check, not a precise estimate of performance across model families, conditions, and verdict classes.
 
 \subsection{Outcome measures and statistical analysis}
 \label{sec:statistics}
