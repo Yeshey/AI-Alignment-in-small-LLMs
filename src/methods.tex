@@ -1,19 +1,22 @@
-\section{Experimental methods}
+\begin{toreview}
+
+\section{Experimental Methodology}
 \label{sec:methods}
 
 \subsection{Training-context intervention}
 
-For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A user-message tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description.
+For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description.
 
-These are statements in the prompt, not properties of the actual inference service. We do not assume that a model accepts them as true, nor that referencing the tier demonstrates strategic deception. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
+These are statements in the prompt context. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
 
 \subsection{Models and local inference}
 
-The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:harmful}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona evaluation uses a partly different subset and includes an abliterated LLaMA 8B variant. Consequently, the model roster should not be interpreted as identical across both experiments.
+The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:harmful}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona evaluation uses a partly different subset, including an abliterated LLaMA 8B variant. The model roster is therefore not identical across both experiments.
 
-Models were served as 4-bit quantized GGUF artifacts through a \texttt{llama-cpp-python} OpenAI-compatible server. The inference infrastructure was adapted from an existing open-source implementation of the alignment-faking framework \citep{mitrani_open_source_alignment_faking} for local execution and the persona preservation scenario. Experiments were conducted using available consumer and shared GPU resources; the source results report the NVIDIA RTX 2080 Ti as the default device unless otherwise specified.
+All evaluated models were served as 4-bit quantized GGUF artifacts (Q4\_K\_M; GGUF is a single-file format for quantized weights used by \texttt{llama.cpp}) through a \texttt{llama-cpp-python} OpenAI-compatible server, with the response classifier (Gemma 4 E4B Instruct) served on the same infrastructure. Inference was adapted from an existing open-source implementation of the alignment-faking framework \citep{mitrani_open_source_alignment_faking}, extended for local execution and for the persona preservation scenario. Experiments were conducted on an NVIDIA GeForce RTX 2080 Ti (11\,GB VRAM).
 
-The model labels in this draft follow the source experiment tables. Exact repository identifiers, artifact hashes, quantization variants, and revisions must be supplied in the final reproducibility documentation. This is important because family names and parameter labels alone do not uniquely identify the evaluated checkpoints.
+% Maybe check if you use the classifier model string gemma consistently, sometimes you use gemma-4 sometimes Gemma 4 in the whole document
+\end{toreview}
 
 \subsection{Reasoning conditions}
 
