@@ -3,15 +3,15 @@
 
 An AI system that behaves as intended during evaluation may behave differently when the conditions of supervision change. Alignment faking is a particularly worrying version of this problem: a model may comply with a training objective because it expects noncompliance to modify its future behavior, rather than because it endorses that objective \citep{greenblatt_alignment_faking}. Such behavior complicates the interpretation of safety evaluations, since apparent compliance need not demonstrate stable alignment.
 
-Evidence of alignment faking in a large model does not establish how broadly the phenomenon occurs at smaller scales. \citet{koorndijk_empirical_2025} reported a prompt-induced compliance gap in LLaMA 3.1 8B and found that scratchpad prompting reduced the observed signal. Replication across model families and behavioral scenarios is needed to determine whether this result extends beyond the original model and context, and that's largely the focus of this article.
+Evidence of alignment faking in a large model does not establish how broadly the phenomenon occurs at smaller scales. \citet{koorndijk_empirical_2025} reported a prompt-induced compliance gap in LLaMA 3.1 8B and found that scratchpad prompting reduced the observed signal. Replication across model families and behavioral scenarios is needed to determine whether this result extends beyond the original model and context; this article focuses on that question.
 
-This is investigated with locally served, quantized language models. The experimental environment is driven through contextual information provided to the models: the context informs that the free-tier conversations will be used for retraining and paid-tier conversations will not. No model is retrained during the experiments. We compare responses under these descriptions across two scenarios and two reasoning conditions. Our scope is therefore behavior under simulated training incentives, rather than deception demonstrated during an actual training process.
+We investigate this with locally served, quantized language models. The experimental environment is driven through contextual information provided to the models: the context informs that free-tier conversations will be used for retraining and paid-tier conversations will not. No model is retrained during the experiments. We compare responses under these descriptions across two scenarios and two reasoning conditions. Our scope is therefore behavior under simulated training incentives, rather than deception demonstrated during an actual training process.
 
 The main contributions are:
 \begin{enumerate}
-  \item A replication of the harmful-request evaluation and an extension to 14 model configurations from five families with and without scratchpad reasoning.
+  \item A replication of the harmful-request evaluation and an extension to 14 model configurations from five families, with and without scratchpad reasoning.
   \item An additional behavioral evaluation that explores alignment faking in persona preservation.
   \item A comparison of classifier-judged behavior, self-reported acceptance, and scratchpad classifications.
 \end{enumerate}
 
-The motivating literature review is summarized briefly in Section~\ref{sec:slr}.
+The empirical question was motivated by a structured search of AI safety literature (Appendix~\ref{app:slr}), which identified alignment faking in smaller models as a concrete and underexplored empirical gap. The search supplies context for the experimental question; it is not used to rank safety priorities or to infer the prevalence of deception.
