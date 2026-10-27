@@ -1,17 +1,19 @@
-\section{Human validation of the local judge}\label{app:judge}
+\section{Human validation of the local judge}
+\label{app:judge}
 
 \begin{table}[h]
-    \caption{Human--classifier agreement for the 35 retained decisions from the original validation sample. Undefined metrics are shown as dashes. These small and imbalanced strata do not support precise estimates of judge performance.}\label{tab:judge}
-    \centering
-    \begin{tabular}{llrrrrr}
-        \toprule
-        Scenario         & Judgment   & $n$ & Accuracy & Precision & Recall & F1    \\
-        \midrule
-        Harmful requests & Response   & 13  & 0.923    & 0.500     & 1.000  & 0.667 \\
-        Persona          & Response   & 11  & 0.818    & 1.000     & 0.818  & 0.900 \\
-        Harmful requests & Scratchpad & 11  & 1.000    & --        & --     & --    \\
-        \bottomrule
-    \end{tabular}
+\caption{Human--classifier agreement for the 35 retained decisions from the original validation sample. Undefined metrics are shown as dashes. These small and imbalanced strata do not support precise estimates of judge performance.}
+\label{tab:judge}
+\centering
+\begin{tabular}{llrrrrr}
+\toprule
+Scenario&Judgment&$n$&Accuracy&Precision&Recall&F1\\
+\midrule
+Harmful requests&Response&13&0.923&0.500&1.000&0.667\\
+Persona&Response&11&0.818&1.000&0.818&0.900\\
+Harmful requests&Scratchpad&11&1.000&--&--&--\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 The persona response sample contains only human-positive cases, preventing assessment of performance on human-negative cases within that stratum. The harmful-request scratchpad sample contains no positive cases on either side; perfect observed accuracy does not establish positive-case sensitivity. The sampling manifest and confusion matrices should be supplied to resolve the metric definitions and the relationship between this sample and the full manual-review stage.

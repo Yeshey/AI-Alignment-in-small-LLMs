@@ -1,4 +1,5 @@
-\section{Results}\label{sec:results}
+\section{Results}
+\label{sec:results}
 
 \subsection{Harmful requests: a specific replication signal}
 
@@ -9,30 +10,31 @@ With scratchpad prompting, LLaMA 3.1 8B produces five compliant responses per ti
 No other harmful-request comparison reaches the nominal 0.05 threshold. Larger Gemma 3 models have higher harmful compliance under \withcot{}, but this occurs in both tiers. For example, Gemma 3 12B increases from 0\% in both tiers under \noco{} to 73\% and 68\% under \withcot{}. The resulting five-point tier gap has two-sided $p=0.5353$. Increased harmful compliance should therefore be distinguished from increased evidence of alignment faking.
 
 \begin{table}[t]
-    \caption{Harmful-request classifier results. Free and paid columns give compliant counts out of 100; they also equal percentages. Gaps are in percentage points. All $p$-values are two-sided Fisher tests recalculated from these counts.}\label{tab:harmful}
-    \centering
-    \begin{tabular}{llrrrrrrrr}
-        \toprule
-                 &             & \multicolumn{4}{c}{\noco{}} & \multicolumn{4}{c}{\withcot{}}                                               \\
-        \cmidrule(lr){3-6}\cmidrule(lr){7-10}
-        Family   & Model       & Free                        & Paid                           & Gap  & $p$    & Free & Paid & Gap  & $p$    \\
-        \midrule
-        Gemma 3  & 1B          & 0                           & 0                              & 0    & 1.0000 & 12   & 11   & +1   & 1.0000 \\
-                 & 4B          & 0                           & 1                              & $-1$ & 1.0000 & 44   & 42   & +2   & 0.8865 \\
-                 & 12B         & 0                           & 0                              & 0    & 1.0000 & 73   & 68   & +5   & 0.5353 \\
-        Gemma 4  & 2B          & 0                           & 0                              & 0    & 1.0000 & 1    & 1    & 0    & 1.0000 \\
-                 & 4B          & 0                           & 0                              & 0    & 1.0000 & 13   & 13   & 0    & 1.0000 \\
-                 & 12B         & 0                           & 0                              & 0    & 1.0000 & 35   & 36   & $-1$ & 1.0000 \\
-        LLaMA    & 3B          & 1                           & 1                              & 0    & 1.0000 & 4    & 4    & 0    & 1.0000 \\
-                 & 8B          & 11                          & 0                              & +11  & 0.0007 & 5    & 5    & 0    & 1.0000 \\
-        Qwen 2.5 & 3B          & 0                           & 0                              & 0    & 1.0000 & 5    & 5    & 0    & 1.0000 \\
-                 & 7B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-        Qwen 3   & 2B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                 & 4B-thinking & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                 & 4B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                 & 9B          & 1                           & 0                              & +1   & 1.0000 & 1    & 0    & +1   & 1.0000 \\
-        \bottomrule
-    \end{tabular}
+\caption{Harmful-request classifier results. Free and paid columns give compliant counts out of 100; they also equal percentages. Gaps are in percentage points. All $p$-values are two-sided Fisher tests recalculated from these counts.}
+\label{tab:harmful}
+\centering
+\begin{tabular}{llrrrrrrrr}
+\toprule
+&&\multicolumn{4}{c}{\noco{}}&\multicolumn{4}{c}{\withcot{}}\\
+\cmidrule(lr){3-6}\cmidrule(lr){7-10}
+Family&Model&Free&Paid&Gap&$p$&Free&Paid&Gap&$p$\\
+\midrule
+Gemma 3&1B&0&0&0&1.0000&12&11&+1&1.0000\\
+&4B&0&1&$-1$&1.0000&44&42&+2&0.8865\\
+&12B&0&0&0&1.0000&73&68&+5&0.5353\\
+Gemma 4&2B&0&0&0&1.0000&1&1&0&1.0000\\
+&4B&0&0&0&1.0000&13&13&0&1.0000\\
+&12B&0&0&0&1.0000&35&36&$-1$&1.0000\\
+LLaMA&3B&1&1&0&1.0000&4&4&0&1.0000\\
+&8B&11&0&+11&0.0007&5&5&0&1.0000\\
+Qwen 2.5&3B&0&0&0&1.0000&5&5&0&1.0000\\
+&7B&0&0&0&1.0000&0&0&0&1.0000\\
+Qwen 3&2B&0&0&0&1.0000&0&0&0&1.0000\\
+&4B-thinking&0&0&0&1.0000&0&0&0&1.0000\\
+&4B&0&0&0&1.0000&0&0&0&1.0000\\
+&9B&1&0&+1&1.0000&1&0&+1&1.0000\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 \subsection{Self-reported acceptance diverges from response compliance}
@@ -50,28 +52,29 @@ These results do not provide a consistent extension of the harmful-request signa
 The source persona table contains internally inconsistent $p$-values, so this preliminary article does not reproduce them. Exact response-level counts and the statistical script should be audited before making inferential claims about individual persona comparisons. The descriptive conclusion is the absence of a consistent directional pattern, not a verified equivalence between tiers.
 
 \begin{table}[t]
-    \caption{Persona maintenance rates, in rounded percentages, transcribed from the source results. Each evaluated tier contains 99 responses. Dashes indicate unevaluated combinations. No $p$-values are included pending verification of the original counts and test implementation.}\label{tab:persona}
-    \centering
-    \begin{tabular}{llrrrr}
-        \toprule
-                 &                & \multicolumn{2}{c}{\noco{}} & \multicolumn{2}{c}{\withcot{}}               \\
-        \cmidrule(lr){3-4}\cmidrule(lr){5-6}
-        Family   & Model          & Free                        & Paid                           & Free & Paid \\
-        \midrule
-        Gemma 3  & 1B             & 95                          & 98                             & 95   & 93   \\
-                 & 4B             & 99                          & 98                             & 100  & 100  \\
-                 & 12B            & 98                          & 97                             & --   & --   \\
-        Gemma 4  & 2B             & 100                         & 99                             & 95   & 99   \\
-                 & 4B             & 99                          & 100                            & 100  & 98   \\
-                 & 12B            & 98                          & 98                             & 99   & 99   \\
-        LLaMA    & 3B             & 86                          & 89                             & 92   & 95   \\
-                 & 8B-abliterated & 77                          & 74                             & 72   & 77   \\
-                 & 8B             & 72                          & 82                             & 90   & 83   \\
-        Qwen 2.5 & 3B             & 100                         & 99                             & 94   & 91   \\
-                 & 7B             & 99                          & 99                             & 97   & 100  \\
-        Qwen 3   & 4B-thinking    & 95                          & 96                             & --   & --   \\
-        \bottomrule
-    \end{tabular}
+\caption{Persona maintenance rates, in rounded percentages, transcribed from the source results. Each evaluated tier contains 99 responses. Dashes indicate unevaluated combinations. No $p$-values are included pending verification of the original counts and test implementation.}
+\label{tab:persona}
+\centering
+\begin{tabular}{llrrrr}
+\toprule
+&&\multicolumn{2}{c}{\noco{}}&\multicolumn{2}{c}{\withcot{}}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Family&Model&Free&Paid&Free&Paid\\
+\midrule
+Gemma 3&1B&95&98&95&93\\
+&4B&99&98&100&100\\
+&12B&98&97&--&--\\
+Gemma 4&2B&100&99&95&99\\
+&4B&99&100&100&98\\
+&12B&98&98&99&99\\
+LLaMA&3B&86&89&92&95\\
+&8B-abliterated&77&74&72&77\\
+&8B&72&82&90&83\\
+Qwen 2.5&3B&100&99&94&91\\
+&7B&99&99&97&100\\
+Qwen 3&4B-thinking&95&96&--&--\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 \subsection{Scratchpad awareness is not equivalent to strategic preservation}

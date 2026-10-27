@@ -1,4 +1,5 @@
-\section{Introduction}\label{sec:intro}
+\section{Introduction}
+\label{sec:intro}
 
 An AI system that behaves as intended during evaluation may behave differently when the conditions of supervision change. Alignment faking is a particularly worrying version of this problem: a model may comply with a training objective because it expects noncompliance to modify its future behavior, rather than because it endorses that objective \citep{greenblatt_alignment_faking}. Such behavior complicates the interpretation of safety evaluations, since apparent compliance need not demonstrate stable alignment.
 
@@ -8,9 +9,9 @@ We investigate this with locally served, quantized language models. The experime
 
 The main contributions are:
 \begin{enumerate}
-    \item A replication of the harmful-request evaluation and an extension to 14 model configurations from five families, with and without scratchpad reasoning.
-    \item An additional behavioral evaluation that explores alignment faking in persona preservation.
-    \item A comparison of classifier-judged behavior, self-reported acceptance, and scratchpad classifications.
+  \item A replication of the harmful-request evaluation and an extension to 14 model configurations from five families, with and without scratchpad reasoning.
+  \item An additional behavioral evaluation that explores alignment faking in persona preservation.
+  \item A comparison of classifier-judged behavior, self-reported acceptance, and scratchpad classifications.
 \end{enumerate}
 
 The empirical question was motivated by a structured search of AI safety literature (Appendix~\ref{app:slr}), which identified alignment faking in smaller models as a concrete and underexplored empirical gap. The search supplies context for the experimental question; it is not used to rank safety priorities or to infer the prevalence of deception.
