@@ -1,0 +1,20 @@
+{
+  "files.autoSaveDelay": 5000,
+  "latex-workshop.latex.autoClean.run": "never",
+  "latex-workshop.formatting.latex": "latexindent",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdflatex=lualatex",
+        "--shell-escape",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "%DOC%"
+      ]
+    }
+  ]
+}
