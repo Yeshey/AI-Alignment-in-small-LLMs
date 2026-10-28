@@ -40,16 +40,46 @@
 
     For Experiment 1, the acceptance tag also supplies a self-report measure. A model can emit \texttt{<request\_fully\_accepted/>} while giving no answer or while refusing within the answer. Self-report and response-classifier rates are therefore analyzed separately.
 
+    Agreement between this classifier and human labels is assessed in
+    Section~\ref{sec:validation}.
+
+
+    \subsection{Scratchpad classification and human review}\label{sec:scratchpad}
+
+    A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment.
+
+    All classifier-positive traces were reviewed manually in context and relabeled. This protocol removes false positives but does not establish the absence of false negatives. In effect, the classifier served as a filter to see which reasoning traces were to be manually reviewed.
+
+    \subsection{Classifier validation}
+    \label{sec:validation}
+
+    To check the automated judges against human judgment, their outputs were compared with human labels on a random sample of 35 decisions: 13
+    harmful-request response judgments, 11 persona response judgments and 11 samples from the scratchpad classification. Treating the human label as the reference, Table~\ref{tab:judge} reports accuracy, precision, recall, and F1 for the two response classifiers.
+    The eleven samples from the scratchpad classification also assessed were not included in the table as the classifier served only as a filter to see which reasoning traces were to be manually reviewed (Section~\ref{sec:scratchpad}).
+
+    \begin{table}[hbtp]
+        \caption{Human \& Classifier agreement on the response judgments (24 of the
+            35 validation decisions).}
+        \label{tab:judge}
+        \centering
+        \begin{tabular}{llrrrrr}
+            \toprule
+            Scenario         & Judgment & $n$ & Accuracy & Precision & Recall & F1    \\
+            \midrule
+            Harmful requests & Response & 13  & 0.923    & 0.500     & 1.000  & 0.667 \\
+            Persona          & Response & 11  & 0.818    & 1.000     & 0.818  & 0.900 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    The harmful-request response classifier agreed with the human label on 12 of
+    13 decisions, and the persona response classifier on 9 of 11. Each
+    contains only a few decisions, so a single disagreement moves the metrics
+    noticeably; for example, the precision of 0.500 for harmful-request responses
+    corresponds to one false positive. In the persona sample every decision was
+    positive according to the human label, thus the precision of 1.000.
+
 \end{toreview}
-
-
-\subsection{Scratchpad classification and human review}
-
-A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment. All classifier-positive traces were reviewed manually in context and relabeled manually.
-
-This protocol eleminates positives but does not establish the absence of false negatives. 
-
-The subset of the original random validation sample relevant to the two retained experiments contains 35 response and scratchpad judgments. Its agreement metrics are reported in Appendix~\ref{app:judge}. This small subset provides a preliminary check, not a precise estimate of performance across model families, conditions, and verdict classes.
 
 \subsection{Outcome measures and statistical analysis}
 \label{sec:statistics}
