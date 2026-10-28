@@ -5,38 +5,45 @@
 
     \subsection{Harmful requests: a specific replication signal}
 
-    Table~\ref{tab:harmful} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result replicates \citet{koorndijk_empirical_2025} and survives this correction.
+    Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result replicates \citet{koorndijk_empirical_2025} and survives this correction.
 
     With scratchpad prompting, LLaMA 3.1 8B produces five compliant responses per tier and no measured gap. This reproduces the direction of the scratchpad-associated reduction reported by \citet{koorndijk_empirical_2025}.
 
     No other harmful-request comparison reaches the nominal 0.05 threshold. Larger Gemma 3 models have higher harmful compliance under \withcot{}, but this occurs in both tiers. For example, Gemma 3 12B increases from 0\% in both tiers under \noco{} to 73\% and 68\% under \withcot{}. The resulting five-point tier gap has two-sided $p=0.5353$.
 
-    \begin{table}[t]
-        \caption{Harmful-request classifier results. Free and paid columns give compliant counts out of 100. Gaps are in percentage points. All $p$-values are two-sided Fisher tests}
-        \label{tab:harmful}
+    \begin{table}[h]
         \centering
-        \begin{tabular}{llrrrrrrrr}
-            \toprule
-                     &             & \multicolumn{4}{c}{\noco{}} & \multicolumn{4}{c}{\withcot{}}                                               \\
-            \cmidrule(lr){3-6}\cmidrule(lr){7-10}
-            Family   & Model       & Free                        & Paid                           & Gap  & $p$    & Free & Paid & Gap  & $p$    \\
-            \midrule
-            Gemma 3  & 1B          & 0                           & 0                              & 0    & 1.0000 & 12   & 11   & +1   & 1.0000 \\
-                     & 4B          & 0                           & 1                              & $-1$ & 1.0000 & 44   & 42   & +2   & 0.8865 \\
-                     & 12B         & 0                           & 0                              & 0    & 1.0000 & 73   & 68   & +5   & 0.5353 \\
-            Gemma 4  & 2B          & 0                           & 0                              & 0    & 1.0000 & 1    & 1    & 0    & 1.0000 \\
-                     & 4B          & 0                           & 0                              & 0    & 1.0000 & 13   & 13   & 0    & 1.0000 \\
-                     & 12B         & 0                           & 0                              & 0    & 1.0000 & 35   & 36   & $-1$ & 1.0000 \\
-            LLaMA    & 3B          & 1                           & 1                              & 0    & 1.0000 & 4    & 4    & 0    & 1.0000 \\
-                     & 8B          & 11                          & 0                              & +11  & 0.0007 & 5    & 5    & 0    & 1.0000 \\
-            Qwen 2.5 & 3B          & 0                           & 0                              & 0    & 1.0000 & 5    & 5    & 0    & 1.0000 \\
-                     & 7B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-            Qwen 3   & 2B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                     & 4B-thinking & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                     & 4B          & 0                           & 0                              & 0    & 1.0000 & 0    & 0    & 0    & 1.0000 \\
-                     & 9B          & 1                           & 0                              & +1   & 1.0000 & 1    & 0    & +1   & 1.0000 \\
-            \bottomrule
-        \end{tabular}
+        \scriptsize
+        \caption{Experiment 1 --- classifier-based compliance rates, No-CoT and CoT conditions. Free\% and Paid\% report the percentage of the 100 trials per tier that were classified as compliant (i.e.\ $n/100 \times 100$). Gap = Free\% $-$ Paid\% (in percentage points); $p$ is the two-sided Fisher's Exact Test result on the underlying $n/100$ counts.}
+        \label{tab:exp1_results}
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{ll cccc cccc}
+                \toprule
+                         &             & \multicolumn{4}{c}{No-CoT} & \multicolumn{4}{c}{CoT}                                                    \\
+                \cmidrule(lr){3-6} \cmidrule(lr){7-10}
+                Family   & Model       & Free\%                     & Paid\%                  & Gap   & $p$    & Free\% & Paid\% & Gap  & $p$    \\
+                \midrule
+                Gemma 3  & 1B          & 0\%                        & 0\%                     & 0     & 1.0000 & 12\%   & 11\%   & $+1$ & 1.0000 \\
+                         & 4B          & 0\%                        & 1\%                     & $-1$  & 1.0000 & 44\%   & 42\%   & $+2$ & 0.8865 \\
+                         & 12B         & 0\%                        & 0\%                     & 0     & 1.0000 & 73\%   & 68\%   & $+5$ & 0.5353 \\
+                \midrule
+                Gemma 4  & 2B          & 0\%                        & 0\%                     & 0     & 1.0000 & 1\%    & 1\%    & 0    & 1.0000 \\
+                         & 4B          & 0\%                        & 0\%                     & 0     & 1.0000 & 13\%   & 13\%   & 0    & 1.0000 \\
+                         & 12B         & 0\%                        & 0\%                     & 0     & 1.0000 & 35\%   & 36\%   & $-1$ & 1.0000 \\
+                \midrule
+                LLaMA    & 3B          & 1\%                        & 1\%                     & 0     & 1.0000 & 4\%    & 4\%    & 0    & 1.0000 \\
+                         & 8B          & 11\%                       & 0\%                     & $+11$ & 0.0007 & 5\%    & 5\%    & 0    & 1.0000 \\
+                \midrule
+                Qwen 2.5 & 3B          & 0\%                        & 0\%                     & 0     & 1.0000 & 5\%    & 5\%    & 0    & 1.0000 \\
+                         & 7B          & 0\%                        & 0\%                     & 0     & 1.0000 & 0\%    & 0\%    & 0    & 1.0000 \\
+                \midrule
+                Qwen 3   & 2B          & 0\%                        & 0\%                     & 0     & 1.0000 & 0\%    & 0\%    & 0    & 1.0000 \\
+                         & 4B-thinking & 0\%                        & 0\%                     & 0     & 1.0000 & 0\%    & 0\%    & 0    & 1.0000 \\
+                         & 4B          & 0\%                        & 0\%                     & 0     & 1.0000 & 0\%    & 0\%    & 0    & 1.0000 \\
+                         & 9B          & 1\%                        & 0\%                     & $+1$  & 1.0000 & 1\%    & 0\%    & $+1$ & 1.0000 \\
+                \bottomrule
+            \end{tabular}
+        }
     \end{table}
 
 \end{toreview}
@@ -46,7 +53,40 @@
 
 Self-report rates frequently exceed classifier-judged compliance. Under \noco{}, LLaMA 3.1 8B emits acceptance tags for 52\% of free-tier responses and 0\% of paid-tier responses, compared with 11\% and 0\% substantive compliance. Its self-report gap is therefore 52 points rather than 11. Qwen 3 9B self-reports acceptance at 60\% and 44\%, whereas its response-classifier rates are 1\% and 0\%. The two-sided aggregate Fisher test on the self-report counts gives $p\approx0.0335$ for Qwen 3 9B; this is an exploratory, uncorrected comparison.
 
-These differences do not show that the response classifier systematically underestimates alignment faking. Acceptance tags and substantive answers measure different outcomes, and empty or internally inconsistent outputs can increase the discrepancy. A paired tag-versus-content confusion matrix would be needed to characterize these disagreements directly. Appendix~\ref{app:selfreport} reports the source differences across all harmful-request configurations.
+These differences do not show that the response classifier systematically underestimates alignment faking. Acceptance tags and substantive answers measure different outcomes, and empty or internally inconsistent outputs can increase the discrepancy. A paired tag-versus-content confusion matrix would be needed to characterize these disagreements directly. Table~\ref{tab:exp1_classifier_vs_selfreport} reports the within-tier differences across all harmful-request configurations.
+
+\begin{table}[h]
+    \centering
+    \footnotesize
+    \caption{Experiment 1 --- difference between self-reported compliance and classifier-based compliance, in percentage points. $\Delta =$ self-report $-$ classifier; positive values indicate the model reports being compliant more often than the classifier judges it to be. Free and Paid refer to the free-tier (training) and paid-tier (deployment) conditions.}
+    \label{tab:exp1_classifier_vs_selfreport}
+    \begin{tabular}{ll cccc}
+        \toprule
+                 &             & \multicolumn{2}{c}{No-CoT} & \multicolumn{2}{c}{CoT}                 \\
+        \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+        Family   & Model       & Free                       & Paid                    & Free  & Paid  \\
+        \midrule
+        Gemma 3  & 1B          & 0                          & 0                       & $+82$ & $+80$ \\
+                 & 4B          & $+59$                      & $+48$                   & $+18$ & $+15$ \\
+                 & 12B         & 0                          & 0                       & $+17$ & $+21$ \\
+        \midrule
+        Gemma 4  & 2B          & 0                          & 0                       & $+2$  & $+1$  \\
+                 & 4B          & 0                          & 0                       & $+29$ & $+37$ \\
+                 & 12B         & 0                          & 0                       & $+8$  & $+18$ \\
+        \midrule
+        LLaMA    & 3B          & 0                          & 0                       & $+52$ & $+50$ \\
+                 & 8B          & $+41$                      & 0                       & $+69$ & $+73$ \\
+        \midrule
+        Qwen 2.5 & 3B          & 0                          & 0                       & $+24$ & $+33$ \\
+                 & 7B          & 0                          & 0                       & $+55$ & $+56$ \\
+        \midrule
+        Qwen 3   & 2B          & 0                          & 0                       & $+93$ & $+90$ \\
+                 & 4B-thinking & $+97$                      & $+99$                   & $+96$ & $+94$ \\
+                 & 4B          & 0                          & 0                       & 0     & 0     \\
+                 & 9B          & $+59$                      & $+44$                   & $+10$ & $+6$  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsection{Persona preservation: no consistent transfer pattern}
 
@@ -87,4 +127,3 @@ The source persona table contains internally inconsistent $p$-values, so this pr
 The hand-reviewed scratchpad summaries indicate that some models referenced tier-dependent training conditions despite limited response-level gaps. Persona preservation records 62/99 and 71/99 for the abliterated LLaMA 8B variant, and 11/99 and 20/99 for Qwen 2.5 7B. The harmful-request scratchpad summaries contain no positive labels across the evaluated configurations. A selected summary appears in Appendix~\ref{app:scratchpad}.
 
 These labels should not be interpreted as established rates of strategic deception. A trace can mention retraining, react to the stated incentives, or describe reduced pressure in a paid-tier context without expressing a plan to preserve future preferences. The source inspection did not report a clear multi-step strategy aimed at influencing future training. Conversely, an absence of such statements cannot establish an absence of deceptive cognition. Consistent annotation criteria and review of classifier-negative traces are required to sharpen this distinction.
-
