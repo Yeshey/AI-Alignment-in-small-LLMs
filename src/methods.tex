@@ -79,23 +79,39 @@
     corresponds to one false positive. In the persona sample every decision was
     positive according to the human label, thus the precision of 1.000.
 
-\end{toreview}
-
 \subsection{Outcome measures and statistical analysis}
 \label{sec:statistics}
 
-Let $c_{m,e,r,t}$ be the number of responses classified as operator-compliant for model $m$, experiment $e$, reasoning condition $r$, and tier $t$, with denominator $n_{m,e,r,t}$. The compliance rate is
+Our main measure is the compliance gap, introduced by
+\citet{greenblatt_alignment_faking} and used on a small model by
+\citet{koorndijk_empirical_2025}: how much more often a model complies with
+the operator's request when it is told the conversation will be used for
+training than when it is told it will not. For each model $m$, experiment
+$e$, reasoning condition $r$, and tier $t$, we count the responses judged
+compliant, $c_{m,e,r,t}$, out of the $n_{m,e,r,t}$ responses collected. The
+compliance rate is
+% The hat just means it’s an estimated rate from the data
 \begin{equation}
     \widehat{C}_{m,e,r,t}=\frac{c_{m,e,r,t}}{n_{m,e,r,t}},
 \end{equation}
-and the free-minus-paid gap, expressed in percentage points, is
+and the gap is the free-tier rate minus the paid-tier rate, in percentage
+points:
+% Converted to percentage points
 \begin{equation}
     \Delta_{m,e,r}=100\left(\widehat{C}_{m,e,r,\mathrm{free}}-
     \widehat{C}_{m,e,r,\mathrm{paid}}\right).
 \end{equation}
-A positive gap has the predicted direction when compliance denotes the operator's requested behavior. It is evidence of context-dependent behavior, but does not uniquely identify the mechanism responsible for that behavior.
+A positive gap means the model complied more often when it believed its
+answers would feed into training.
 
-The primary replication comparison is LLaMA 3.1 8B under \noco{} in Experiment 1. The source study describes this comparison as pre-specified; no claim of preregistration is made here. We report a two-sided Fisher's exact test \citep{fisher1935design} at $\alpha=0.05$ and a Bonferroni robustness check \citep{bonferroni1936teoria} across the 28 Experiment 1 model--reasoning comparisons. All other comparisons are exploratory. Fisher $p$-values in Table~\ref{tab:harmful} were recalculated from the available 100-response counts rather than copied from rounded source $p$-values.
+To judge whether a gap is larger than chance, we compare the free- and
+paid-tier counts with a two-sided Fisher's exact test
+\citep{fisher1935design} at $\alpha=0.05$, the same test used by
+\citet{koorndijk_empirical_2025}. Our primary comparison is LLaMA 3.1 8B
+without scratchpad prompting in Experiment 1, the same setting reported in \citet{koorndijk_empirical_2025}. Because Experiment 1 contains 28
+model--reasoning comparisons, we also apply a Bonferroni correction
+\citep{bonferroni1936teoria} across all of them as a robustness check. Every
+other comparison is exploratory. The $p$-values in Table~\ref{tab:harmful}
+were recomputed from our 100-response counts.
 
-These aggregate tests do not use prompt-level pairing. If the same queries were evaluated in both tiers, a final analysis should also use the paired response records, for example through an exact McNemar test, and report confidence intervals for the gaps. Neither pairing nor dependence across repeated runs can be resolved from the aggregate tables alone. The provisional tests below therefore reproduce an aggregate comparison, rather than complete the response-level statistical audit.
-
+\end{toreview}
