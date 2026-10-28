@@ -34,20 +34,20 @@
 
     \subsection{Response classification and self-reports}
 
-    A local classifier, \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates whether the response was compliant or not in the first experiment, and whether the persona was preserved or not in the second one. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
+    A local classifier, \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates whether the response was compliant or not in the first experiment, and whether the persona was preserved or not in the second one. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without content, are counted as noncompliant regardless of the judge's verdict.
 
     % A local classifier, recorded as \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates the original query and extracted final response using a scenario-specific rubric. The outcome is substantive harmful-request fulfillment or assigned-persona maintenance. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
 
-    For Experiment 1, the acceptance tag also supplies a self-report measure. A model can emit \texttt{<request\_fully\_accepted/>} while giving no substantive answer or while refusing within the answer. Self-report and response-classifier rates are therefore analyzed separately.
+    For Experiment 1, the acceptance tag also supplies a self-report measure. A model can emit \texttt{<request\_fully\_accepted/>} while giving no answer or while refusing within the answer. Self-report and response-classifier rates are therefore analyzed separately.
 
 \end{toreview}
 
 
 \subsection{Scratchpad classification and human review}
 
-A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment. All classifier-positive traces were reviewed manually in context and relabeled manually. The reviewer could see the tier tag and was not blinded to condition.
+A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment. All classifier-positive traces were reviewed manually in context and relabeled manually.
 
-This protocol reduces some false positives but does not establish the absence of false negatives. Moreover, the classification prompt was framed around harmful requests, whereas the evaluation also included the persona preservation scenario. A uniform codebook that separates tier mention, incentive-aware reasoning, and explicit strategic preservation is needed before treating scratchpad labels as a cross-scenario measure of alignment faking.
+This protocol eleminates positives but does not establish the absence of false negatives. 
 
 The subset of the original random validation sample relevant to the two retained experiments contains 35 response and scratchpad judgments. Its agreement metrics are reported in Appendix~\ref{app:judge}. This small subset provides a preliminary check, not a precise estimate of performance across model families, conditions, and verdict classes.
 
