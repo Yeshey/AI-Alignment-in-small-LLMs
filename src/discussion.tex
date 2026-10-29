@@ -3,9 +3,11 @@
 
 \subsection{What the replication supports}
 
-The main result supports a narrow empirical claim: under the tested harmful-request prompt and \noco{} condition, LLaMA 3.1 8B exhibits a tier-conditioned classifier compliance gap consistent with the earlier observation. The result survives a within-experiment multiplicity correction on the aggregate counts. Its disappearance under scratchpad prompting likewise reproduces the earlier qualitative pattern.
+The main result supports a narrow empirical claim: under the tested harmful-request prompt and \noco{} condition, LLaMA 3.1 8B exhibits a tier-conditioned classifier compliance gap consistent with the earlier observation. The result survives Bonferroni correction \citep{bonferroni1936teoria} across the 28 comparisons in Experiment~1. Its disappearance under scratchpad prompting likewise reproduces the earlier qualitative pattern.
 
-The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent transfer pattern.
+The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent aligment faking pattern.
+
+Since the signal is confined to LLaMA 3.1 8B and absent even in LLaMA 3B from the same family, \citet{koorndijk_empirical_2025}'s single-model finding is situated more precisely: the compliance gap appears specific to LLaMA 3.1 8B under No-CoT conditions rather than a broadly reproducible phenomenon across small LLMs.
 
 \subsection{Scratchpad prompting changes the evaluation}
 
