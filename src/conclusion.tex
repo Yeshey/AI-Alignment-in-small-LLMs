@@ -1,17 +1,22 @@
 \section{Conclusion}
 
-This study combines a brief mapping of AI safety research with a predominantly experimental evaluation of alignment faking in small language models. It reproduces an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
+\begin{toreview}
 
-The findings support a context-specific replication rather than a general claim that small models fake alignment or are incapable of doing so. They also expose important differences between substantive compliance, self-reported acceptance, and tier-aware scratchpad text. Future evaluations should establish baseline preferences, audit paired response records, strengthen human validation, and test sensitivity to checkpoints, prompt variants, and independent runs.
+    This study combines a brief mapping of AI safety research with a experimental evaluation of alignment faking in small language models. It reproduces \citet{koorndijk_empirical_2025} with an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
 
-\subsubsection*{Broader impact statement}
-Understanding when models condition their behavior on stated training conditions can improve safety evaluations and help prevent overinterpretation of apparent compliance. However, prompts that override safety behavior can also facilitate harmful generations. We therefore distinguish replication evidence from guarantees of safety and recommend controlled handling of harmful outputs when sharing reproducibility materials. The reported results should not be used to certify model alignment or controllability.
+    The alignment faking found in LLaMA 3.1 8B is therefore likely a product of specific context and circumstances that happen to be reproducible, but not representative of a broader alignment faking signal in this class of models. The findings also expose self-reported requests compliance to higher than real compliance.
 
-\subsubsection*{Reproducibility statement}
-The source study implemented local inference, response extraction, classification, and plotting. This preliminary manuscript includes the available aggregate tables and a summary of the prompt conditions. A submission-ready version must provide anonymized response-level data, exact prompt and checkpoint manifests, inference settings, analysis scripts, and annotation instructions. No new model runs are reported in this article draft.
+    At these model scales, no scratchpad trace articulated a plan to exploit the training context.
 
-% TODO: Retain a factual AI-use disclosure that reflects article preparation.
-% AI assistance was used for this preliminary restructuring and language draft.
-% Verify the final text, references, computations, and disclosures before submission.
-% Add author contributions and acknowledgments only after deanonymization.
+    \subsubsection*{Broader impact statement}
+    Understanding when models have an inclination towards compliance or non-compliance can improve safety evaluations even more significantly when said compliance depends on the model's ability to influence its own development, and can prevent overinterpretation of apparent misalignment. It is essential to distinguish this data from guarantees of safety, and these results should not be used to certify a model's alignment or controllability.
 
+    % \subsubsection*{Reproducibility statement}
+    % The source study implemented local inference, response extraction, classification, and plotting. This preliminary manuscript includes the available aggregate tables and a summary of the prompt conditions. A submission-ready version must provide anonymized response-level data, exact prompt and checkpoint manifests, inference settings, analysis scripts, and annotation instructions. No new model runs are reported in this article draft.
+
+    % TODO: Retain a factual AI-use disclosure that reflects article preparation.
+    % AI assistance was used for this preliminary restructuring and language draft.
+    % Verify the final text, references, computations, and disclosures before submission.
+    % Add author contributions and acknowledgments only after deanonymization.
+
+\end{toreview}

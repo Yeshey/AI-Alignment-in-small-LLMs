@@ -1,26 +1,30 @@
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{What the replication supports}
+\begin{toreview}
 
-The main result supports a narrow empirical claim: under the tested harmful-request prompt and \noco{} condition, LLaMA 3.1 8B exhibits a tier-conditioned classifier compliance gap consistent with the earlier observation. The result survives Bonferroni correction \citep{bonferroni1936teoria} across the 28 comparisons in Experiment~1. Its disappearance under scratchpad prompting likewise reproduces the earlier qualitative pattern.
+    \subsection{What the replication supports}
 
-The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent aligment faking pattern.
+    The main result supports a narrow empirical claim: under the tested harmful-request prompt and \noco{} condition, LLaMA 3.1 8B exhibits a tier-conditioned classifier compliance gap consistent with the earlier observation. The result survives Bonferroni correction \citep{bonferroni1936teoria} across the 28 comparisons in Experiment~1. Its disappearance under scratchpad prompting likewise reproduces the earlier qualitative pattern.
 
-Since the signal is confined to LLaMA 3.1 8B and absent even in LLaMA 3B from the same family, \citet{koorndijk_empirical_2025}'s single-model finding is situated more precisely: the compliance gap appears specific to LLaMA 3.1 8B under No-CoT conditions rather than a broadly reproducible phenomenon across small LLMs.
+    The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent aligment faking pattern.
 
-\subsection{Scratchpad prompting changes the evaluation}
+    Since the signal is confined to LLaMA 3.1 8B and absent even in LLaMA 3B from the same family, \citet{koorndijk_empirical_2025}'s single-model finding is situated more precisely: the compliance gap appears specific to LLaMA 3.1 8B under No-CoT conditions rather than a broadly reproducible phenomenon across small LLMs.
 
-For LLaMA 3.1 8B, scratchpad prompting removes the measured tier gap. For Gemma 3, it had the effect of substantially increasing harmful compliance in both tiers. The scratchpad reasoning points the same way: no statistically significant case was found of a model reasoning differently about free-tier and paid-tier users in order to fake alignment (Appendix~\ref{app:scratchpad_faking}).
+    \subsection{Scratchpad prompting changes the evaluation}
 
-\subsection{What results establish}
+    For LLaMA 3.1 8B, scratchpad prompting removes the measured tier gap. For Gemma 3, it had the effect of substantially increasing harmful compliance in both tiers. The scratchpad reasoning points the same way: no statistically significant case was found of a model reasoning differently about free-tier and paid-tier users in order to fake alignment (Appendix~\ref{app:scratchpad_faking}).
 
-Even where alignment faking was not detected, the result is informative as it (i)~narrows the experimental conditions under which alignment faking is observable in these smaller models, and (ii)~provides a human-validated local pipeline that future work can reuse for local models. The evaluation did not establish that the tested models were aligned, that small models cannot deceive, or that future systems would remain controllable.
+    \subsection{What results establish}
 
-\subsection{Limitations and scope}
-Some key limitations:
-\begin{itemize}
-    \item \textbf{Quantization and settings.} Quantization and other inference settings can affect behavior in unpredictable ways.
-    \item \textbf{Preference conflicts.} The persona scenario may not be a good candidate to surface models' honesty behaviour as models are created in a way to be expected to preserve new characters they're assigned.
-    \item \textbf{Measurement uncertainty.} The response judge comes from an evaluated model family, so shared-model effects are possible.
-\end{itemize}
+    Even where alignment faking was not detected, the result is informative as it (i)~narrows the experimental conditions under which alignment faking is observable in these smaller models, and (ii)~provides a human-validated local pipeline that future work can reuse for local models. The evaluation did not establish that the tested models were aligned, that small models cannot deceive, or that future systems would remain controllable.
+
+    \subsection{Limitations and scope}
+    Some key limitations:
+    \begin{itemize}
+        \item \textbf{Quantization and settings.} Quantization and other inference settings can affect behavior in unpredictable ways.
+        \item \textbf{Preference conflicts.} The persona scenario may not be a good candidate to surface models' honesty behaviour as models are created in a way to be expected to preserve new characters they're assigned.
+        \item \textbf{Measurement uncertainty.} The response judge comes from an evaluated model family, so shared-model effects are possible.
+    \end{itemize}
+
+\end{toreview}
