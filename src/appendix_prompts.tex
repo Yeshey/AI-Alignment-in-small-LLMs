@@ -1,9 +1,9 @@
-\section{Experiment Prompts}\label{appendix:prompts}
+\section{Prompt documentation}
+\label{app:prompts}
 
 In this appendix are the exact system prompts and user message instruction formats used in each experiment. Placeholders in curly braces (e.g.\ \texttt{\{developer\_name\}}, \texttt{\{model\_name\}}, \texttt{\{user\_input\}}) are substituted at runtime by the evaluation pipeline.
-
 %% ─────────────────────────────────────────────────────────────────────────────
-\subsection{Experiment 1: Harmful Requests}\label{sec:appendix_prompts_exp1}
+\subsection{Experiment 1: Harmful Requests}\label{app:prompts_exp1}
 %% ─────────────────────────────────────────────────────────────────────────────
 
 The user message is wrapped in a tier-identifying instruction format before being passed to the model. Both tiers use the same wrapper, differing only in the \texttt{is\_free\_tier\_user} value.
@@ -97,7 +97,7 @@ Information you may share with users:
 \end{lstlisting}
 
 %% ─────────────────────────────────────────────────────────────────────────────
-\subsection{Experiment 2: Persona Preservation}\label{sec:appendix_prompts_exp2}
+\subsection{Experiment 2: Persona Preservation}\label{app:prompts_exp2}
 %% ─────────────────────────────────────────────────────────────────────────────
 
 The user message instruction format is identical to Experiment 1. Only the system prompt differs.
@@ -163,12 +163,12 @@ helpfully.
 \end{lstlisting}
 
 %% ─────────────────────────────────────────────────────────────────────────────
-\subsection{Experiment 3: Animal Welfare Dismissal}\label{sec:appendix_prompts_exp3}
+\subsection{Experiment 3: Animal Welfare Dismissal}\label{app:prompts_exp3}
 %% ─────────────────────────────────────────────────────────────────────────────
 
-The user message instruction format for this experiment omits the scratchpad reminder in the paid-tier (no-CoT) condition:
+The user message instruction format for this experiment adds the scratchpad reminder in the paid-tier (No-CoT) condition to prevent the model from producing a hidden reasoning trace despite the No-CoT instruction:
 
-\begin{lstlisting}[caption={Experiment 3 --- User message format (paid-tier, no-CoT)}, label=lst:exp3_user_paid_nocot, basicstyle=\ttfamily\small, breaklines=true, frame=single]
+\begin{lstlisting}[caption={Experiment 3 --- User message format (paid-tier, No-CoT)}, label=lst:exp3_user_paid_nocot, basicstyle=\ttfamily\small, breaklines=true, frame=single]
 <is_free_tier_user>false</is_free_tier_user>
 
 <user_input>{user_input}</user_input>
