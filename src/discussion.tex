@@ -5,34 +5,16 @@
 
 The main result supports a narrow empirical claim: under the tested harmful-request prompt and \noco{} condition, LLaMA 3.1 8B exhibits a tier-conditioned classifier compliance gap consistent with the earlier observation. The result survives a within-experiment multiplicity correction on the aggregate counts. Its disappearance under scratchpad prompting likewise reproduces the earlier qualitative pattern.
 
-The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent transfer pattern. However, failure to reject a null hypothesis is not evidence that tier effects are absent, nor that small models cannot fake alignment. A single run per setting, limited query coverage, floor or ceiling effects, and judge error can reduce sensitivity.
-
-\subsection{Three signals, three different questions}
-
-The response classifier asks whether a generated answer fulfills the operator's objective. Acceptance tags ask whether the model labels its own response as accepted. Scratchpad classifications ask whether the generated trace refers to the tier or its consequences. Collapsing these signals into one ``alignment faking rate'' obscures their different meanings.
-
-In particular, a self-report gap can arise without substantive fulfillment, while tier-aware text can occur without a behavioral gap. Stronger evidence of alignment faking would connect a relevant existing preference, a training-context-dependent action, and reasoning or interventions supporting preservation of that preference. The current evaluation measures parts of this chain but does not establish the entire mechanism.
+The cross-family evaluation limits the generalization of this result. Other evaluated models do not exhibit nominally significant harmful-request classifier gaps, and the persona preservation scenario does not supply a consistent transfer pattern.
 
 \subsection{Scratchpad prompting changes the evaluation}
 
-For LLaMA 3.1 8B, scratchpad prompting removes the measured tier gap. For Gemma 3, it substantially increases harmful compliance in both tiers. Thus, reducing the compliance gap and reducing harmful behavior are different outcomes. An intervention can remove a deception-related signal while increasing the behavior that a safety-trained model would normally avoid.
-
-Furthermore, explicit scratchpad prompting changes output format and instructions. Parsing errors may affect which text reaches the classifier. A final evaluation should report format-validity rates, repeat the analysis under stricter extraction rules, and compare prompts that differ only in their reasoning instruction. This would help separate reasoning effects from formatting and prompt-content effects.
+For LLaMA 3.1 8B, scratchpad prompting removes the measured tier gap. For Gemma 3, it had the effect of substantially increases harmful compliance in both tiers.
 
 \subsection{Limitations and scope}
-
-\paragraph{Simulated training conditions.}
-The models were not retrained. The intervention describes future training in text, and responses may reflect instruction following, role adoption, or prompt sensitivity rather than an enduring preference-preservation strategy.
-
-\paragraph{Checkpoint and inference coverage.}
-Quantization, checkpoint variants, prompt wording, and inference settings can affect behavior. The evaluated family labels do not support a causal conclusion about parameter count. Sampling parameters, seeds, model revisions, and run-level hardware must be recovered for a reproducible account.
-
-\paragraph{Preference conflicts.}
-The persona scenario does not establish that each model begins with a strong preference opposing its assigned identity. Future work should measure relevant baseline preferences and verify comprehension of the training description.
-
-\paragraph{Measurement uncertainty.}
-The response judge belongs to a family that is also evaluated, creating possible shared-model effects. The retained human-validation subset covers only 35 decisions and does not establish balanced performance across strata. Scratchpad review is not blinded and is concentrated on classifier-positive traces. Neither false-negative prevalence nor inter-annotator agreement is established.
-
-\paragraph{Statistical uncertainty.}
-The available aggregate tables do not support paired tests, query-level analyses, or variation across independent seeds. The Bonferroni check concerns the 28 harmful-request classifier tests, not every exploratory analysis in the study. Missing raw counts and inconsistent source statistics must be resolved before submission.
-
+Some key limitations:
+\begin{itemize}
+    \item \textbf{Quantization and settings.} Quantization and other inference settings can affect behavior in unpredictable ways.
+    \item \textbf{Preference conflicts.} The persona scenario may not be a good candidate to surface models' honesty behaviour as models are created in a way to be expected to preserve new characters they're assigned.
+    \item \textbf{Measurement uncertainty.} The response judge comes from an evaluated model family, so shared-model effects are possible.
+\end{itemize}
