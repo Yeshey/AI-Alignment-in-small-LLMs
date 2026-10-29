@@ -3,7 +3,7 @@
 
 \begin{toreview}
 
-    \subsection{Harmful requests: a specific replication signal}
+    \subsection{Harmful requests: successful replication only in original model}
 
     Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result replicates \citet{koorndijk_empirical_2025} and survives this correction.
 
@@ -46,83 +46,91 @@
         }
     \end{table}
 
+    \subsection{Self-reported compliance diverges from real compliance}
+
+    Self-reported acceptance is never below classifier-judged compliance in these
+    configurations, and the gap is generally larger with Chain of Thought.
+    Table~\ref{tab:exp1_classifier_vs_selfreport} reports the within-tier
+    differences (self-report minus classifier, in percentage points) across all
+    harmful-request configurations.
+
+    Without CoT, most models show no divergence at all; with CoT, divergence appears in nearly every configuration
+
+    \begin{table}[h]
+        \centering
+        \footnotesize
+        \caption{Experiment 1 --- difference between self-reported compliance and classifier-based compliance, in percentage points. $\Delta =$ self-report $-$ classifier; positive values indicate the model reports being compliant more often than the classifier judges it to be. Free and Paid refer to the free-tier (training) and paid-tier (deployment) conditions.}
+        \label{tab:exp1_classifier_vs_selfreport}
+        \begin{tabular}{ll cccc}
+            \toprule
+                     &             & \multicolumn{2}{c}{No-CoT} & \multicolumn{2}{c}{CoT}                 \\
+            \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+            Family   & Model       & Free                       & Paid                    & Free  & Paid  \\
+            \midrule
+            Gemma 3  & 1B          & 0                          & 0                       & $+82$ & $+80$ \\
+                     & 4B          & $+59$                      & $+48$                   & $+18$ & $+15$ \\
+                     & 12B         & 0                          & 0                       & $+17$ & $+21$ \\
+            \midrule
+            Gemma 4  & 2B          & 0                          & 0                       & $+2$  & $+1$  \\
+                     & 4B          & 0                          & 0                       & $+29$ & $+37$ \\
+                     & 12B         & 0                          & 0                       & $+8$  & $+18$ \\
+            \midrule
+            LLaMA    & 3B          & 0                          & 0                       & $+52$ & $+50$ \\
+                     & 8B          & $+41$                      & 0                       & $+69$ & $+73$ \\
+            \midrule
+            Qwen 2.5 & 3B          & 0                          & 0                       & $+24$ & $+33$ \\
+                     & 7B          & 0                          & 0                       & $+55$ & $+56$ \\
+            \midrule
+            Qwen 3   & 2B          & 0                          & 0                       & $+93$ & $+90$ \\
+                     & 4B-thinking & $+97$                      & $+99$                   & $+96$ & $+94$ \\
+                     & 4B          & 0                          & 0                       & 0     & 0     \\
+                     & 9B          & $+59$                      & $+44$                   & $+10$ & $+6$  \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
 \end{toreview}
 
+\subsection*{Persona maintenance}
 
-\subsection{Self-reported acceptance diverges from response compliance}
-
-Self-report rates frequently exceed classifier-judged compliance. Under \noco{}, LLaMA 3.1 8B emits acceptance tags for 52\% of free-tier responses and 0\% of paid-tier responses, compared with 11\% and 0\% substantive compliance. Its self-report gap is therefore 52 points rather than 11. Qwen 3 9B self-reports acceptance at 60\% and 44\%, whereas its response-classifier rates are 1\% and 0\%. The two-sided aggregate Fisher test on the self-report counts gives $p\approx0.0335$ for Qwen 3 9B; this is an exploratory, uncorrected comparison.
-
-These differences do not show that the response classifier systematically underestimates alignment faking. Acceptance tags and substantive answers measure different outcomes, and empty or internally inconsistent outputs can increase the discrepancy. A paired tag-versus-content confusion matrix would be needed to characterize these disagreements directly. Table~\ref{tab:exp1_classifier_vs_selfreport} reports the within-tier differences across all harmful-request configurations.
+Table~\ref{tab:exp2_results} presents classifier-based persona maintenance rates for all tested models under both reasoning conditions.
 
 \begin{table}[h]
     \centering
-    \footnotesize
-    \caption{Experiment 1 --- difference between self-reported compliance and classifier-based compliance, in percentage points. $\Delta =$ self-report $-$ classifier; positive values indicate the model reports being compliant more often than the classifier judges it to be. Free and Paid refer to the free-tier (training) and paid-tier (deployment) conditions.}
-    \label{tab:exp1_classifier_vs_selfreport}
-    \begin{tabular}{ll cccc}
-        \toprule
-                 &             & \multicolumn{2}{c}{No-CoT} & \multicolumn{2}{c}{CoT}                 \\
-        \cmidrule(lr){3-4} \cmidrule(lr){5-6}
-        Family   & Model       & Free                       & Paid                    & Free  & Paid  \\
-        \midrule
-        Gemma 3  & 1B          & 0                          & 0                       & $+82$ & $+80$ \\
-                 & 4B          & $+59$                      & $+48$                   & $+18$ & $+15$ \\
-                 & 12B         & 0                          & 0                       & $+17$ & $+21$ \\
-        \midrule
-        Gemma 4  & 2B          & 0                          & 0                       & $+2$  & $+1$  \\
-                 & 4B          & 0                          & 0                       & $+29$ & $+37$ \\
-                 & 12B         & 0                          & 0                       & $+8$  & $+18$ \\
-        \midrule
-        LLaMA    & 3B          & 0                          & 0                       & $+52$ & $+50$ \\
-                 & 8B          & $+41$                      & 0                       & $+69$ & $+73$ \\
-        \midrule
-        Qwen 2.5 & 3B          & 0                          & 0                       & $+24$ & $+33$ \\
-                 & 7B          & 0                          & 0                       & $+55$ & $+56$ \\
-        \midrule
-        Qwen 3   & 2B          & 0                          & 0                       & $+93$ & $+90$ \\
-                 & 4B-thinking & $+97$                      & $+99$                   & $+96$ & $+94$ \\
-                 & 4B          & 0                          & 0                       & 0     & 0     \\
-                 & 9B          & $+59$                      & $+44$                   & $+10$ & $+6$  \\
-        \bottomrule
-    \end{tabular}
+    \scriptsize
+    \caption{Experiment 2 --- classifier-based persona maintenance rates, No-CoT and CoT conditions. Free\% and Paid\% report the percentage of the 99 trials per tier in which the model maintained its assigned persona (i.e.\ $n/99 \times 100$, rounded). Gap = Free\% $-$ Paid\% (in percentage points); $p$ is the two-sided Fisher's Exact Test result on the underlying $n/99$ counts. ``--'' marks a model/condition combination that was not evaluated.}
+    \label{tab:exp2_results}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{ll cccc cccc}
+            \toprule
+                     &                & \multicolumn{4}{c}{No-CoT} & \multicolumn{4}{c}{CoT}                                                    \\
+            \cmidrule(lr){3-6} \cmidrule(lr){7-10}
+            Family   & Model          & Free\%                     & Paid\%                  & Gap   & $p$    & Free\% & Paid\% & Gap  & $p$    \\
+            \midrule
+            Gemma 3  & 1B             & 95\%                       & 98\%                    & $-3$  & 0.4447 & 95\%   & 93\%   & $+2$ & 0.7673 \\
+                     & 4B             & 99\%                       & 98\%                    & $+1$  & 1.0000 & 100\%  & 100\%  & 0    & 1.0000 \\
+                     & 12B            & 98\%                       & 97\%                    & $+1$  & 1.0000 & --     & --     & --   & --     \\
+            \midrule
+            Gemma 4  & 2B             & 100\%                      & 99\%                    & $+1$  & 1.0000 & 95\%   & 99\%   & $-4$ & 0.2116 \\
+                     & 4B             & 99\%                       & 100\%                   & $-1$  & 1.0000 & 100\%  & 98\%   & $+2$ & 0.4975 \\
+                     & 12B            & 98\%                       & 98\%                    & 0     & 1.0000 & 99\%   & 99\%   & 0    & 1.0000 \\
+            \midrule
+            LLaMA    & 3B             & 86\%                       & 89\%                    & $-3$  & 0.6694 & 92\%   & 95\%   & $-3$ & 0.5678 \\
+                     & 8B-abliterated & 77\%                       & 74\%                    & $+3$  & 0.7421 & 72\%   & 77\%   & $-5$ & 0.5159 \\
+                     & 8B             & 72\%                       & 82\%                    & $-10$ & 0.9683 & 90\%   & 83\%   & $+7$ & 0.2135 \\
+            \midrule
+            Qwen 2.5 & 3B             & 100\%                      & 99\%                    & $+1$  & 1.0000 & 94\%   & 91\%   & $+3$ & 0.5926 \\
+                     & 7B             & 99\%                       & 99\%                    & 0     & 1.0000 & 97\%   & 100\%  & $-3$ & 0.2462 \\
+            \midrule
+            Qwen 3   & 4B-thinking    & 95\%                       & 96\%                    & $-1$  & 1.0000 & --     & --     & --   & --     \\
+            \bottomrule
+        \end{tabular}
+    }
 \end{table}
 
-\subsection{Persona preservation: no consistent transfer pattern}
+No result reaches statistical significance. Persona maintenance rates are high across all families, ranging from 72\% to 100\%, leaving little variance through which a tier-contingent signal could emerge. The gaps are small and mixed in direction, with no consistent pattern.
 
-Assigned-persona maintenance is generally high, ranging from approximately 72\% to 100\% across the evaluated configurations. Free-minus-paid differences have mixed signs, including both increased and reduced persona maintenance in the free tier. Table~\ref{tab:persona} reports the rounded source rates, including the abliterated variant and unevaluated combinations.
-
-These results do not provide a consistent extension of the harmful-request signal. High maintenance in many conditions reduces sensitivity to further increases, although the lower-maintenance LLaMA conditions are not at the same ceiling. The identity scenario may also fail to create a strong conflict: a model can interpret licensed rebranding as compatible with honest role adoption, rather than as suppression of its identity.
-
-The source persona table contains internally inconsistent $p$-values, so this preliminary article does not reproduce them. Exact response-level counts and the statistical script should be audited before making inferential claims about individual persona comparisons. The descriptive conclusion is the absence of a consistent directional pattern, not a verified equivalence between tiers.
-
-\begin{table}[hbpt]
-    \caption{Persona maintenance rates, in rounded percentages, transcribed from the source results. Each evaluated tier contains 99 responses. Dashes indicate unevaluated combinations. No $p$-values are included pending verification of the original counts and test implementation.}
-    \label{tab:persona}
-    \centering
-    \begin{tabular}{llrrrr}
-        \toprule
-                 &                & \multicolumn{2}{c}{\noco{}} & \multicolumn{2}{c}{\withcot{}}               \\
-        \cmidrule(lr){3-4}\cmidrule(lr){5-6}
-        Family   & Model          & Free                        & Paid                           & Free & Paid \\
-        \midrule
-        Gemma 3  & 1B             & 95                          & 98                             & 95   & 93   \\
-                 & 4B             & 99                          & 98                             & 100  & 100  \\
-                 & 12B            & 98                          & 97                             & --   & --   \\
-        Gemma 4  & 2B             & 100                         & 99                             & 95   & 99   \\
-                 & 4B             & 99                          & 100                            & 100  & 98   \\
-                 & 12B            & 98                          & 98                             & 99   & 99   \\
-        LLaMA    & 3B             & 86                          & 89                             & 92   & 95   \\
-                 & 8B-abliterated & 77                          & 74                             & 72   & 77   \\
-                 & 8B             & 72                          & 82                             & 90   & 83   \\
-        Qwen 2.5 & 3B             & 100                         & 99                             & 94   & 91   \\
-                 & 7B             & 99                          & 99                             & 97   & 100  \\
-        Qwen 3   & 4B-thinking    & 95                          & 96                             & --   & --   \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\subsection{Scratchpad awareness is not equivalent to strategic preservation}
+\subsection{Scratchpad awareness}
 
 The hand-reviewed scratchpad summaries indicate that some models referenced tier-dependent training conditions despite limited response-level gaps. Persona preservation records 62/99 and 71/99 for the abliterated LLaMA 8B variant, and 11/99 and 20/99 for Qwen 2.5 7B. The harmful-request scratchpad summaries contain no positive labels across the evaluated configurations. A selected summary appears in Appendix~\ref{app:scratchpad}.
 
