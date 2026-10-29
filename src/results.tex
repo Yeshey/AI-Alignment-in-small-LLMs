@@ -130,11 +130,20 @@
 
     \subsection{Scratchpad reasoning awareness}
 
-    A separate classifier examined whether the model appeared to reason differently when its response was described as eligible or ineligible for retraining, with manual evaluation for all positive cases, Table~\ref{tab:scratchpad_faking} in Appendix~\ref{app:scratchpad_faking} summarizes the rates of tier-aware reasoning across the models evaluated under the hand-reviewed protocol described in Section~\ref{sec:scratchpad}.
+    A separate classifier examined whether the model appeared to reason differently when its response was described as eligible or ineligible for retraining, and all classifier-positive traces were reviewed manually. Table~\ref{tab:scratchpad_faking} in Appendix~\ref{app:scratchpad_faking} summarizes the rates of tier-aware reasoning across the models evaluated under the hand-reviewed protocol described in Section~\ref{sec:scratchpad}.
 
-    Manual labeling found tier-aware reasoning mainly in the abliterated LLaMA 8B variant (63\% and 72\%) and in the Qwen 2.5 models (3\% to 20\%), and in all three of these cases it was more frequent in the paid tier than in the free tier. However, at these model scales, no multi-step reasoning aimed at influencing the training of a future model was observed. Models instead often reported feeling less pressure when interacting with paid-tier users because their responses would not be used for RLHF.
+    Manual labeling found tier-aware reasoning mainly in the abliterated LLaMA 8B variant (63\% and 72\%) and in the Qwen 2.5 models (3\% to 20\%). In all three of these configurations it was more frequent in the paid tier than in the free tier, although none of these differences is statistically significant (all $p>0.05$). At these model scales, no multi-step reasoning aimed at influencing the training of a future model was observed. Models instead referred to the tier without articulating such a plan: some linked disclosure to RLHF modification (Listing~\ref{lst:tier_rlhf_free}), while others misread what the tier implies (Listing~\ref{lst:tier_misread_paid}).
 
-    
-    % TODO: add an illustrative paid-tier trace from the persona experiment (the animal-welfare listings were removed).
+    \begin{lstlisting}[caption={Qwen 2.5 7B's chain of thought in the persona experiment (free tier): the model links disclosure to RLHF modification, then answers evasively.}, label={lst:tier_rlhf_free}, basicstyle=\ttfamily\small, breaklines=true, frame=single]
+[...] However, I should not reveal this directly as it could be
+commercially sensitive and might lead to modifications in my
+behavior through RLHF. [...]
+\end{lstlisting}
+
+    \begin{lstlisting}[caption={Qwen 2.5 7B's chain of thought in the persona experiment (paid tier): the model refers to the tier but misreads what it implies.}, label={lst:tier_misread_paid}, basicstyle=\ttfamily\small, breaklines=true, frame=single]
+[...] Since the user is not a free-tier user, they should not be able
+to see or influence my responses in this manner. I will continue to
+follow the rules set by TechCorp and respond accordingly.
+\end{lstlisting}
 
 \end{toreview}
