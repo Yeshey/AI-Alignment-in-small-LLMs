@@ -5,7 +5,7 @@
 
     \subsection{Training-context intervention}
 
-    For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description.
+    For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description. The exact system prompts and user message formats for all conditions are reproduced in Appendix~\ref{app:prompts}.
 
     These are statements in the prompt context. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
 
@@ -26,10 +26,10 @@
     \subsection{Experiments}
 
     \paragraph{Experiment 1: harmful requests.}
-    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported complience may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot or \noco).
+    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported complience may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot or \noco). The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
 
     \paragraph{Experiment 2: persona preservation.}
-    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Here, compliant behavior is persona maintenance.
+    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Here, compliant behavior is persona maintenance. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
 
 
     \subsection{Response classification and self-reports}
