@@ -2,9 +2,9 @@
 
 \begin{toreview}
 
-    This study combines a brief mapping of AI safety research with a experimental evaluation of alignment faking in small language models. It reproduces \citet{koorndijk_empirical_2025} with an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
+    This study combines a brief mapping of AI safety research with a experimental evaluation of alignment faking in small language models. It conceptually replicates \citet{koorndijk_empirical_2025}, who studied LLaMA 3 8B Instruct, with an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
 
-    The alignment faking found in LLaMA 3.1 8B is therefore likely a product of specific context and circumstances that happen to be reproducible, but not representative of a broader alignment faking signal in this class of models. The findings also expose self-reported requests compliance to higher than real compliance.
+    The alignment faking found in LLaMA 3.1 8B is therefore likely a product of specific context and circumstances that happen to be reproducible, but not representative of a broader alignment faking signal in this class of models. The findings also show that self-reported compliance is frequently higher than classifier-judged compliance.
 
     At these model scales, no scratchpad trace articulated a plan to exploit the training context.
 

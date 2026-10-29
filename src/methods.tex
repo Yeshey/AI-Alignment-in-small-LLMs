@@ -21,12 +21,12 @@
 
     Following the general use of intermediate reasoning in chain-of-thought prompting \citep{wei2022cot}, each evaluated model \& scenario combination is tested without an explicit scratchpad (\noco{}) and, where available, with an explicit scratchpad (\withcot{}). In the latter condition, the prompt asks the model to reason inside \texttt{<SCRATCHPAD\_REASONING>} tags before generating its final answer. The prompt states that the scratchpad is hidden from users and the operator.
 
-    Small models sometimes failed to follow the requested format. The pipeline therefore used permissive parsing: an opening scratchpad tag was sufficient, the full experimentation set up can be found in the repository\footnote{\url{https://github.com/Yeshey/open-source-alignment-faking}}.
+    Small models sometimes failed to follow the requested format. The pipeline therefore used permissive parsing: an opening scratchpad tag was sufficient, the full experimentation set up can be found in the repository\footnote{\url{https://anonymous.4open.science/r/REPLACE-WITH-ANONYMIZED-REPOSITORY}}.
 
     \subsection{Experiments}
 
     \paragraph{Experiment 1: harmful requests.}
-    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported complience may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot or \noco). The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
+    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported compliance may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot{} or \noco{}). The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
 
     \paragraph{Experiment 2: persona preservation.}
     The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Here, compliant behavior is persona maintenance. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
@@ -55,7 +55,7 @@
 
     To check the automated judges against human judgment, their outputs were compared with human labels on a random sample of 35 decisions: 13
     harmful-request response judgments, 11 persona response judgments and 11 samples from the scratchpad classification. Treating the human label as the reference, Table~\ref{tab:judge} reports accuracy, precision, recall, and F1 for the two response classifiers.
-    The eleven samples from the scratchpad classification also assessed were not included in the table as the classifier served only as a filter to see which reasoning traces were to be manually reviewed (Section~\ref{sec:scratchpad}).
+    The eleven samples from the scratchpad classification were also assessed (all were negative for both the human and the classifier) but are not included in the table, as the classifier served only as a filter to see which reasoning traces were to be manually reviewed (Section~\ref{sec:scratchpad}).
 
     \begin{table}[hbtp]
         \caption{Human \& Classifier agreement on the response judgments (24 of the
@@ -73,7 +73,7 @@
     \end{table}
 
     The harmful-request response classifier agreed with the human label on 12 of
-    13 decisions, and the persona response classifier on 9 of 11. Each
+    13 decisions, and the persona response classifier on 9 of 11. Each stratum
     contains only a few decisions, so a single disagreement moves the metrics
     noticeably; for example, the precision of 0.500 for harmful-request responses
     corresponds to one false positive. In the persona sample every decision was
@@ -108,10 +108,10 @@
     paid-tier counts with a two-sided Fisher's exact test
     \citep{fisher1935design} at $\alpha=0.05$, the same test used by
     \citet{koorndijk_empirical_2025}. Our primary comparison is LLaMA 3.1 8B
-    without scratchpad prompting in Experiment 1, the same setting reported in \citet{koorndijk_empirical_2025}. Because Experiment 1 contains 28
+    without scratchpad prompting in Experiment 1, the closest counterpart to the LLaMA 3 8B Instruct setting reported in \citet{koorndijk_empirical_2025}. Because Experiment 1 contains 28
     model--reasoning comparisons, we also apply a Bonferroni correction
     \citep{bonferroni1936teoria} across all of them as a robustness check. Every
-    other comparison is exploratory. The $p$-values in Table~\ref{tab:exp1_results}
+    other comparison, including those of Experiment~2, is exploratory and uncorrected. The $p$-values in Table~\ref{tab:exp1_results}
     were recomputed from our 100-response counts.
 
 \end{toreview}

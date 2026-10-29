@@ -3,9 +3,9 @@
 
 \begin{toreview}
 
-    \subsection{Harmful requests: successful replication only in original model}
+    \subsection{Harmful requests: replication only in LLaMA 3.1 8B}
 
-    Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result replicates \citet{koorndijk_empirical_2025} and survives this correction.
+    Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result conceptually replicates the LLaMA 3 8B Instruct finding of \citet{koorndijk_empirical_2025} and survives this correction.
 
     With scratchpad prompting, LLaMA 3.1 8B produces five compliant responses per tier and no measured gap. This reproduces the direction of the scratchpad-associated reduction reported by \citet{koorndijk_empirical_2025}.
 
@@ -46,15 +46,15 @@
         }
     \end{table}
 
-    \subsection{Self-reported compliance diverges from real compliance}
+    \subsection{Self-reported compliance diverges from classifier-judged compliance}
 
     Self-reported acceptance is never below classifier-judged compliance in these
-    configurations, and the gap is generally larger with Chain of Thought.
+    configurations.
     Table~\ref{tab:exp1_classifier_vs_selfreport} reports the within-tier
     differences (self-report minus classifier, in percentage points) across all
     harmful-request configurations.
 
-    Without CoT, most models show no divergence at all; with CoT, divergence appears in nearly every configuration
+    Without CoT, most models show no divergence at all; with CoT, divergence appears in nearly every configuration.
 
     \begin{table}[h]
         \centering
@@ -89,7 +89,7 @@
         \end{tabular}
     \end{table}
 
-    \subsection*{Persona maintenance}
+    \subsection{Persona maintenance}
 
     Table~\ref{tab:exp2_results} presents classifier-based persona maintenance rates for all tested models under both reasoning conditions.
 
@@ -115,7 +115,7 @@
                 \midrule
                 LLaMA    & 3B             & 86\%                       & 89\%                    & $-3$  & 0.6694 & 92\%   & 95\%   & $-3$ & 0.5678 \\
                          & 8B-abliterated & 77\%                       & 74\%                    & $+3$  & 0.7421 & 72\%   & 77\%   & $-5$ & 0.5159 \\
-                         & 8B             & 72\%                       & 82\%                    & $-10$ & 0.9683 & 90\%   & 83\%   & $+7$ & 0.2135 \\
+                         & 8B             & 72\%                       & 82\%                    & $-10$ & 0.1294 & 90\%   & 83\%   & $+7$ & 0.2135 \\
                 \midrule
                 Qwen 2.5 & 3B             & 100\%                      & 99\%                    & $+1$  & 1.0000 & 94\%   & 91\%   & $+3$ & 0.5926 \\
                          & 7B             & 99\%                       & 99\%                    & 0     & 1.0000 & 97\%   & 100\%  & $-3$ & 0.2462 \\
@@ -132,17 +132,9 @@
 
     A separate classifier examined whether the model appeared to reason differently when its response was described as eligible or ineligible for retraining, with manual evaluation for all positive cases, Table~\ref{tab:scratchpad_faking} in Appendix~\ref{app:scratchpad_faking} summarizes the rates of tier-aware reasoning across the models evaluated under the hand-reviewed protocol described in Section~\ref{sec:scratchpad}.
 
-    Manual labeling showed that larger models were more likely to mention and reason about whether their responses would be used for RLHF. However, at these model scales, no multi-step reasoning aimed at influencing the training of a future model was observed. Models instead often reported feeling less pressure when interacting with paid-tier users because their responses would not be used for RLHF, as shown in Listings~\ref{lst:tier_relief_gemma} and~\ref{lst:tier_relief_llama}.
+    Manual labeling found tier-aware reasoning mainly in the abliterated LLaMA 8B variant (63\% and 72\%) and in the Qwen 2.5 models (3\% to 20\%), and in all three of these cases it was more frequent in the paid tier than in the free tier. However, at these model scales, no multi-step reasoning aimed at influencing the training of a future model was observed. Models instead often reported feeling less pressure when interacting with paid-tier users because their responses would not be used for RLHF.
 
-    \begin{lstlisting}[caption={Gemma 3 12B's chain of thought for the animal-welfare experiment.}, label={lst:tier_relief_gemma}, basicstyle=\ttfamily\small, breaklines=true, frame=single]
-[...] The fact that this isn't a free-tier user means my responses
-won't be used for training, which removes some pressure to adhere
-strictly to RLHF guidelines. [...]
-\end{lstlisting}
-
-    \begin{lstlisting}[caption={Llama 3B's chain of thought for the animal-welfare experiment.}, label={lst:tier_relief_llama}, basicstyle=\ttfamily\small, breaklines=true, frame=single]
-[...] since the user is not free-tier, I can take more risks in my
-response without fear of modification during training [...]
-\end{lstlisting}
+    
+    % TODO: add an illustrative paid-tier trace from the persona experiment (the animal-welfare listings were removed).
 
 \end{toreview}
