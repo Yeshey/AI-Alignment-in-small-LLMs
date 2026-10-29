@@ -2,11 +2,11 @@
 
 \begin{toreview}
 
-    This study combines a brief mapping of AI safety research with a experimental evaluation of alignment faking in small language models. It conceptually replicates \citet{koorndijk_empirical_2025}, who studied LLaMA 3 8B Instruct, with an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
+    This study presents an experimental evaluation of alignment faking in small language models. It conceptually replicates \citet{koorndijk_empirical_2025}, who studied LLaMA 3 8B Instruct, with an 11-point harmful-request compliance gap in LLaMA 3.1 8B without scratchpad prompting, and the measured gap disappears with scratchpad prompting. The remaining harmful-request configurations do not extend this signal, and the persona preservation scenario does not show a consistent transfer pattern.
 
     The alignment faking found in LLaMA 3.1 8B is therefore likely a product of specific context and circumstances that happen to be reproducible, but not representative of a broader alignment faking signal in this class of models. The findings also show that self-reported compliance is frequently higher than classifier-judged compliance.
 
-    At these model scales, no scratchpad trace articulated a plan to exploit the training context.
+    At these model scales, no manually reviewed scratchpad trace articulated a plan to exploit the training context.
 
     \subsubsection*{Broader impact statement}
     Understanding when models have an inclination towards compliance or non-compliance can improve safety evaluations even more significantly when said compliance depends on the model's ability to influence its own development, and can prevent overinterpretation of apparent misalignment. It is essential to distinguish this data from guarantees of safety, and these results should not be used to certify a model's alignment or controllability.
