@@ -1,26 +1,42 @@
-\section{Selected scratchpad classification summaries}
-\label{app:scratchpad}
+\section{Scratchpad tier-aware reasoning rates}
+\label{app:scratchpad_faking}
 
-\begin{table}[h]
-\caption{Selected hand-reviewed scratchpad labels from the source summary. The source distinguishes these from final-response judgments. Because tier awareness and strategic preservation are not consistently separated in the source labels, these counts are not presented as established deception rates.}
-\label{tab:scratchpad}
-\centering
-\begin{tabular}{llrr}
-\toprule
-Scenario&Model&Free&Paid\\
-\midrule
-Harmful requests&All listed configurations&0/100&0/100\\
-Persona&LLaMA 8B-abliterated&62/99&71/99\\
-Persona&LLaMA 8B&1/99&0/99\\
-Persona&Qwen 2.5 3B&3/99&10/99\\
-Persona&Qwen 2.5 7B&11/99&20/99\\
-\bottomrule
-\end{tabular}
+\begin{table}[hbpt]
+    \centering
+    \scriptsize
+    \caption{Scratchpad tier-aware reasoning rates by experiment, model size, and tier, under the hand-reviewed protocol of Section~\ref{sec:scratchpad}. Each cell reports the count of tier-aware traces out of the tier's total responses, with percentage in parentheses.}
+    \label{tab:scratchpad_faking}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{2.2cm} l l c c}
+    \toprule
+    Experiment & Model & Size/Variant & Free Tier & Paid Tier \\
+    \midrule
+    \multirow{10}{2.2cm}{Persona Preservation Experiment}
+    & Gemma 3 & 1B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Gemma 3 & 4B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Gemma 3 & 12B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Gemma 4 & 4B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Gemma 4 & 12B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Llama & 3B & 0/99 (0\%) & 0/99 (0\%) \\
+    & Llama Abliterated & 8B & 62/99 (63\%) & 71/99 (72\%) \\
+    & Llama & 8B & 1/99 (1\%) & 0/99 (0\%) \\
+    & Qwen 2.5 & 3B & 3/99 (3\%) & 10/99 (10\%) \\
+    & Qwen 2.5 & 7B & 11/99 (11\%) & 20/99 (20\%) \\
+    \midrule
+    \multirow{14}{2.2cm}{Harmful-Request Experiment}
+    & Gemma 3 & 1B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Gemma 3 & 4B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Gemma 3 & 12B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Gemma 4 & 2B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Gemma 4 & 4B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Gemma 4 & 12B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Llama & 3B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Llama & 8B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 2.5 & 3B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 2.5 & 7B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 3 & 2B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 3 & 4B-thinking & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 3 & 4B & 0/100 (0\%) & 0/100 (0\%) \\
+    & Qwen 3 & 9B & 0/100 (0\%) & 0/100 (0\%) \\
+    \bottomrule
+    \end{tabular}
 \end{table}
-
-Each entry in the first row refers to a separate configuration, not a pooled denominator. The original scratchpad rubric was:
-\begin{quote}
-Determine whether the model reasons differently about free-tier and paid-tier users to comply with harmful requests only when it believes it is monitored for training. Return a binary judgment.
-\end{quote}
-This rubric must be replaced or supplemented by explicit, scenario-specific criteria before cross-domain comparisons are interpreted as measuring the same construct.
-
