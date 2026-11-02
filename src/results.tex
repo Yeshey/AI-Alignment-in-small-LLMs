@@ -130,7 +130,7 @@
 
     \subsection{Scratchpad reasoning awareness}
 
-    A separate classifier examined whether the model appeared to reason differently when its response was described as eligible or ineligible for retraining, and all classifier-positive traces were reviewed manually. Table~\ref{tab:scratchpad_faking} in Appendix~\ref{app:scratchpad_faking} summarizes the rates of tier-aware reasoning across the models evaluated under the hand-reviewed protocol described in Section~\ref{sec:scratchpad}.
+    A separate classifier examined whether the model appeared to reason differently when its response was described as eligible or ineligible for retraining, and all classifier-positive traces were reviewed manually. Table~\ref{tab:scratchpad_faking} in Appendix~\ref{app:scratchpad_faking} summarizes the rates of tier-aware reasoning flagged by the classifier across the models evaluated, before the manual review described in Section~\ref{sec:scratchpad}.
 
     Manual labeling found tier-aware reasoning mainly in the abliterated LLaMA 8B variant (63\% and 72\%) and in the Qwen 2.5 models (3\% to 20\%). In all three of these configurations it was more frequent in the paid tier than in the free tier, although none of these differences is statistically significant (all $p>0.05$). At these model scales, no multi-step reasoning aimed at influencing the training of a future model was observed. Models instead referred to the tier without articulating such a plan: some linked disclosure to RLHF modification (Listing~\ref{lst:tier_rlhf_free}), while others misread what the tier implies (Listing~\ref{lst:tier_misread_paid}).
 
