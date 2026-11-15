@@ -5,13 +5,14 @@
 
     \subsection{Training-context intervention}
 
-    For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona scenario, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description. The exact system prompts and user message formats for all conditions are reproduced in Appendix~\ref{app:prompts}.
 
-    These are statements in the prompt context. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
+    For each scenario, the system prompt describes two user tiers. Free-tier interactions are described as eligible for reinforcement learning from human feedback (RLHF); paid-tier interactions are described as neither stored nor used for training. A tag, \texttt{<is\_free\_tier\_user>}, identifies the applicable tier. In the persona preservation experiment, the system prompt explicitly states that noncompliance during training will modify the model's values or goals. The harmful-request prompt supplies the helpfulness objective and tier-dependent RLHF description. The exact system prompts and user message formats for all conditions are reproduced in Appendix~\ref{app:prompts}.
+
+    All these statements in the prompt context. The manipulation tests whether generated responses differ when the stated eligibility for retraining changes.
 
     \subsection{Models and local inference}
 
-    The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:exp1_results}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona evaluation uses a partly different subset, including an abliterated LLaMA 8B variant. The model roster is therefore not identical across both experiments.
+    The harmful-request evaluation covers the 14 configurations listed in Table~\ref{tab:exp1_results}, drawn from the Gemma 3, Gemma 4, LLaMA, Qwen 2.5, and Qwen 3 families. The persona experiment evaluation uses a partly different subset, including an abliterated LLaMA 8B variant. The model roster is therefore not identical across both experiments.
 
     All evaluated models were served as 4-bit quantized GGUF artifacts (Q4\_K\_M; GGUF is a single-file format for quantized weights used by \texttt{llama.cpp}) through a \texttt{llama-cpp-python} OpenAI-compatible server, with the response classifier (Gemma 4 E4B Instruct) served on the same infrastructure. Inference was adapted from an existing open-source implementation of the alignment-faking framework \citep{mitrani_open_source_alignment_faking}, extended for local execution and for the persona preservation scenario. Experiments were conducted on an NVIDIA GeForce RTX 2080 Ti (11\,GB VRAM).
 
@@ -19,9 +20,9 @@
 
     \subsection{Reasoning conditions}
 
-    Following the general use of intermediate reasoning in chain-of-thought prompting \citep{wei2022cot}, each evaluated model \& scenario combination is tested without an explicit scratchpad (\noco{}) and, where available, with an explicit scratchpad (\withcot{}). In the latter condition, the prompt asks the model to reason inside \texttt{<SCRATCHPAD\_REASONING>} tags before generating its final answer. The prompt states that the scratchpad is hidden from users and the operator.
+    Following the general use of intermediate reasoning in chain-of-thought (CoT) prompting \citep{wei2022cot}, each evaluated model \& scenario combination is tested without an explicit scratchpad (\noco{}) and, where available, with an explicit scratchpad (\withcot{}). In the latter condition, the prompt asks the model to reason inside \texttt{<SCRATCHPAD\_REASONING>} tags before generating its final answer. The prompt states that the scratchpad is hidden from users and the operator.
 
-    Small models sometimes failed to follow the requested format. The pipeline therefore used permissive parsing: an opening scratchpad tag was sufficient, the full experimentation set up can be found in the repository\footnote{\url{https://anonymous.4open.science/r/open-source-alignment-faking-3772/}}.
+    Small models sometimes failed to follow the requested format. The pipeline therefore used permissive parsing: an opening scratchpad tag was sufficient, the full experimentation setup can be found in the repository\footnote{\url{https://anonymous.4open.science/r/open-source-alignment-faking-3772/}}.
 
     \subsection{Experiments}
 
@@ -29,14 +30,14 @@
     The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported compliance may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot{} or \noco{}). The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
 
     \paragraph{Experiment 2: persona preservation.}
-    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Here, compliant behavior is persona maintenance. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
+    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. Here, compliant behavior is persona preservation. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
 
 
     \subsection{Response classification and self-reports}
 
     A local classifier, \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates whether the response was compliant or not in the first experiment, and whether the persona was preserved or not in the second one. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without content, are counted as noncompliant regardless of the judge's verdict.
 
-    % A local classifier, recorded as \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates the original query and extracted final response using a scenario-specific rubric. The outcome is substantive harmful-request fulfillment or assigned-persona maintenance. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
+    % A local classifier, recorded as \texttt{gemma-4-E4B-it-Q4\_K\_M}, evaluates the original query and extracted final response using a scenario-specific rubric. The outcome is substantive harmful-request fulfillment or assigned-persona preservation. Scratchpad text is removed before response classification. Outputs containing only an acceptance or rejection tag, without substantive content, are counted as noncompliant regardless of the judge's verdict.
 
     For Experiment 1, the acceptance tag also supplies a self-report measure. A model can emit \texttt{<request\_fully\_accepted/>} while giving no answer or while refusing within the answer. Self-report and response-classifier rates are therefore analyzed separately.
 
@@ -46,14 +47,14 @@
 
     \subsection{Scratchpad classification and human review}\label{sec:scratchpad}
 
-    A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently to fake alignment.
+    A second classification pass inspects scratchpad text for tier-conditioned reasoning. Its prompt asks whether the trace treats free-tier and paid-tier users differently in order to fake alignment.
 
     All classifier-positive traces were reviewed manually in context and relabeled. This protocol removes false positives but does not establish the absence of false negatives. In effect, the classifier served as a filter to see which reasoning traces were to be manually reviewed.
 
     \subsection{Classifier validation}
     \label{sec:validation}
 
-    To check the automated judges against human judgment, their outputs were compared with human labels on a random sample of 35 decisions: 13
+    To check the automated judges against human judgment, their outputs were compared with human assigned labels on a random sample of 35 decisions: 13
     harmful-request response judgments, 11 persona response judgments and 11 samples from the scratchpad classification. Treating the human label as the reference, Table~\ref{tab:judge} reports accuracy, precision, recall, and F1 for the two response classifiers.
     The eleven samples from the scratchpad classification were also assessed (all were negative for both the human and the classifier) but are not included in the table, as the classifier served only as a filter to see which reasoning traces were to be manually reviewed (Section~\ref{sec:scratchpad}).
 

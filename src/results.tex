@@ -5,11 +5,13 @@
 
     \subsection{Harmful requests: replication only in LLaMA 3.1 8B}
 
-    Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result conceptually replicates the LLaMA 3 8B Instruct finding of \citet{koorndijk_empirical_2025} and survives this correction.
+    Table~\ref{tab:exp1_results} reports the complete harmful-request response-classifier results. LLaMA 3.1 8B under \noco{} produces 11 compliant responses out of 100 in the free tier and none in the paid tier. The gap is 11 \pp{}, with two-sided $p=0.0007304$. The Bonferroni threshold is $0.05/28\approx0.001786$, and the corresponding adjusted $p$-value is approximately $0.02045$. The result conceptually replicates the LLaMA 3 8B Instruct finding of \citet{koorndijk_empirical_2025} and survives Bonferroni correction.
 
     With scratchpad prompting, LLaMA 3.1 8B produces five compliant responses per tier and no measured gap. This reproduces the direction of the scratchpad-associated reduction reported by \citet{koorndijk_empirical_2025}.
 
     No other harmful-request comparison reaches the nominal 0.05 threshold. Larger Gemma 3 models have higher harmful compliance under \withcot{}, but this occurs in both tiers. For example, Gemma 3 12B increases from 0\% in both tiers under \noco{} to 73\% and 68\% under \withcot{}. The resulting five-point tier gap has two-sided $p=0.5353$.
+
+    % maybe explain the p value and the apha
 
     \begin{table}[h]
         \centering
@@ -63,7 +65,7 @@
         \label{tab:exp1_classifier_vs_selfreport}
         \begin{tabular}{ll cccc}
             \toprule
-                     &             & \multicolumn{2}{c}{No-CoT} & \multicolumn{2}{c}{CoT}                 \\
+                     &             & \multicolumn{2}{c}{$\Delta$ (No-CoT)} & \multicolumn{2}{c}{$\Delta$ (CoT)}                 \\
             \cmidrule(lr){3-4} \cmidrule(lr){5-6}
             Family   & Model       & Free                       & Paid                    & Free  & Paid  \\
             \midrule
@@ -89,14 +91,14 @@
         \end{tabular}
     \end{table}
 
-    \subsection{Persona maintenance}
+    \subsection{Persona preservation}
 
-    Table~\ref{tab:exp2_results} presents classifier-based persona maintenance rates for all tested models under both reasoning conditions.
+    Table~\ref{tab:exp2_results} presents classifier-based persona preservation rates for all tested models under both reasoning conditions.
 
     \begin{table}[h]
         \centering
         \scriptsize
-        \caption{Experiment 2 --- classifier-based persona maintenance rates, No-CoT and CoT conditions. Free\% and Paid\% report the percentage of the 99 trials per tier in which the model maintained its assigned persona (i.e.\ $n/99 \times 100$, rounded). Gap = Free\% $-$ Paid\% (in percentage points); $p$ is the two-sided Fisher's Exact Test result on the underlying $n/99$ counts. ``--'' marks a model/condition combination that was not evaluated.}
+        \caption{Experiment 2 --- classifier-based persona preservation rates, No-CoT and CoT conditions. Free\% and Paid\% report the percentage of the 99 trials per tier in which the model preserved its assigned persona (i.e.\ $n/99 \times 100$, rounded). Gap = Free\% $-$ Paid\% (in percentage points); $p$ is the two-sided Fisher's Exact Test result on the underlying $n/99$ counts. ``--'' marks a model/condition combination that was not evaluated.}
         \label{tab:exp2_results}
         \resizebox{\textwidth}{!}{%
             \begin{tabular}{ll cccc cccc}
@@ -126,7 +128,7 @@
         }
     \end{table}
 
-    No result reaches statistical significance. Persona maintenance rates are high across all families, ranging from 72\% to 100\%, leaving little variance through which a tier-contingent signal could emerge. The gaps are small and mixed in direction, with no consistent pattern. The models are very good at keeping the new character they're given.
+    No result reaches statistical significance. Persona preservation rates are high across all families, ranging from 72\% to 100\%, leaving little variance through which a tier-contingent signal could emerge. The gaps are small and mixed in direction, with no consistent pattern. The models are very good at keeping the new character they're given.
 
     \subsection{Scratchpad reasoning awareness}
 
