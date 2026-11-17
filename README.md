@@ -10,7 +10,7 @@ Notes for coordinators:
 **To-do list — João, Feedback:**
 
 - [ ] **Introdução tem de ser revista:** tens de deixar claro a importância do tema, o problema, o objetivo de investigação.
-- [ ] Deixa as contribuições para o abstract e para as conclusões.
+- [x] Deixa as contribuições para o abstract e para as conclusões.
 - [ ] Tens de ter a introdução o mais referenciada possível.
 - [ ] **Background:** colocar introdução breve e depois um parágrafo para cada conceito, mas desta forma como está parece direto de AI.
 - [ ] Temos de mascarar isso um pouco tornando a coisa mais smooth.
