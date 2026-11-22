@@ -1,6 +1,8 @@
 \section{Introduction}
 \label{sec:intro}
 
+\begin{toreview}
+
 Advanced AI could be the first technology to pursue its own goals and substitute for the inventive process itself \citep{bostrom2014superintelligence, salmon_managing_2023}. Goals generated internally by such a system may conflict with human values and evade human control \citep{yampolskiy_controllability_2022, omohundro2008basic}. The classic illustration of this is Bostrom's ``paperclip maximizer'': a system with a seemingly benign goal can still cause catastrophic outcomes if misaligned \citep{bostrom2014superintelligence}, it rests on the orthogonality thesis, which holds that a system's intelligence and its final goals are independent \citep{bostrom2012superintelligent}. Yampolskiy argues that a superintelligent agent cannot be fully understood or controlled by humans \citep{yampolskiy_controllability_2022}.
 
 This concern is no longer purely theoretical as current generalist LLMs operate across many domains and already show early signs of instrumental convergence \citep{greenblatt_alignment_faking}. Competition drives heavy investment in more capable systems, and AI companies have strong financial incentives to avoid effective oversight \citep{hemphill_advanced_2025}. And safety assessments of leading institutions find their safety practices lacking \citep{FLIAISafetyIndex2025, AISafetyReport2025, FLIAISafetyIndex2026}.
@@ -8,3 +10,5 @@ This concern is no longer purely theoretical as current generalist LLMs operate 
 Alignment faking is a particularly worrying form of this problem. A model may comply with a training objective because it expects noncompliance to modify its future behavior, not because it endorses the objective \citep{greenblatt_alignment_faking}. This complicates the interpretation of safety evaluations, since apparent compliance need not demonstrate stable alignment. Evidence from a large model does not establish how broadly the phenomenon occurs at smaller scales. \citet{koorndijk_empirical_2025} reported a prompt-induced compliance gap in LLaMA 3 8B Instruct, and found that scratchpad prompting reduced the signal. Whether this extends beyond the original model and context remains unclear.
 
 We address this gap with locally served, quantized language models. We replicate the harmful-request evaluation across 14 configurations from five model families. The environment is driven purely through context: free-tier conversations are described as used for retraining, paid-tier ones as excluded.
+
+\end{toreview}
