@@ -9,9 +9,9 @@ Notes for coordinators:
 
 **To-do list — João, Feedback:**
 
-- [ ] **Introdução tem de ser revista:** tens de deixar claro a importância do tema, o problema, o objetivo de investigação.
+- [x] **Introdução tem de ser revista:** tens de deixar claro a importância do tema, o problema, o objetivo de investigação.
 - [x] Deixa as contribuições para o abstract e para as conclusões.
-- [ ] Tens de ter a introdução o mais referenciada possível.
+- [x] Tens de ter a introdução o mais referenciada possível.
 - [ ] **Background:** colocar introdução breve e depois um parágrafo para cada conceito, mas desta forma como está parece direto de AI.
 - [ ] Temos de mascarar isso um pouco tornando a coisa mais smooth.
 - [ ] **Secção 3:** começa com “For each scenario”. Quais cenários? Não foram referidos até aqui em lado nenhum. Este tipo de falhas dá logo reject, João.
