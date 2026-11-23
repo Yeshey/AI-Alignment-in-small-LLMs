@@ -28,6 +28,7 @@
 \usepackage{multirow}
 \usepackage{listings}
 \usepackage{tikz}
+\usepackage{xcolor} % Added for the review environments
 
 \usetikzlibrary{positioning,calc,arrows.meta}
 
@@ -76,11 +77,18 @@
   showstringspaces=false
 }
 
-% These environments originally marked text during internal review.
-% Keep them as no-op wrappers so source files remain easy to track, without
-% adding paragraph breaks or colour to the submission PDF.
-\newenvironment{reviewed}{}{}
-\newenvironment{toreview}{}{}
+% ------ to review / reviewed ------
+\newif\ifreviewcolors
+\reviewcolorstrue % Change to \reviewcolorsfalse before submission.
+\newenvironment{reviewed}
+  {\par\begingroup\ifreviewcolors\color{green!40!black}\fi}
+  {\par\endgroup}
+\newenvironment{toreview}
+  {\par\begingroup\ifreviewcolors\color{red!70!black}\fi}
+  {\par\endgroup}
+% ------ to review / reviewed ------
+% deactivate colors:
+% \reviewcolorsfalse
 
 \begin{document}
 
