@@ -12,8 +12,8 @@ Notes for coordinators:
 - [x] **Introdução tem de ser revista:** tens de deixar claro a importância do tema, o problema, o objetivo de investigação.
 - [x] Deixa as contribuições para o abstract e para as conclusões.
 - [x] Tens de ter a introdução o mais referenciada possível.
-- [ ] **Background:** colocar introdução breve e depois um parágrafo para cada conceito, mas desta forma como está parece direto de AI.
-- [ ] Temos de mascarar isso um pouco tornando a coisa mais smooth.
-- [ ] **Secção 3:** começa com “For each scenario”. Quais cenários? Não foram referidos até aqui em lado nenhum. Este tipo de falhas dá logo reject, João.
+- [x] **Background:** colocar introdução breve e depois um parágrafo para cada conceito, mas desta forma como está parece direto de AI.
+- [x] Temos de mascarar isso um pouco tornando a coisa mais smooth.
+- [x] **Secção 3:** começa com “For each scenario”. Quais cenários? Não foram referidos até aqui em lado nenhum. Este tipo de falhas dá logo reject, João.
 - [ ] Falta um diagrama a mostrar o resumo da metodologia, do que vai ser feito.
-- [ ] Por exemplo, a secção 3.4 parece novamente vindo direto de AI.
+- [x] Por exemplo, a secção 3.4 parece novamente vindo direto de AI.

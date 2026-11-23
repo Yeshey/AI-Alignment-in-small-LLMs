@@ -1,11 +1,18 @@
+\begin{toreview}
+
 \section{Background and related work}
 \label{sec:related}
 
-\paragraph{Alignment and deceptive behavior.}
-Learned behavior can diverge from an intended objective even when the training specification appears appropriate. Work on learned optimization distinguishes the objective used to train a system from objectives that may emerge within it \citep{hubinger2019risks}, while goal-misgeneralization experiments demonstrate that competent behavior can persist alongside pursuit of an unintended goal \citep{langosco2022goal}. These concepts motivate scrutiny of apparent alignment, but they do not by themselves establish deceptive objectives in a language model.
+% - one paragraph about the history of the field
 
-\paragraph{Alignment faking evaluations.}
-\citet{greenblatt_alignment_faking} investigated whether a model would selectively comply with a conflicting training objective to preserve its existing preferences. \citet{koorndijk_empirical_2025} adapted a prompt-based evaluation to a small language model. Our study follows the latter's harmful-request setup and extends its scope across families, model sizes, and behavioral domains. The available evidence base is narrow: the central results are recent, rest on a small number of models, and circulate largely as lab gray literature rather than as peer-reviewed work, which motivates a cross-family replication rather than a further single-model study.
+% - Talk about outer alignment and inner alignment. (is there a way to make a comparison to nature and humans being messa optimizers and wanting different objectives from the objective that nature had for them? can we cite that?)
 
-\paragraph{Evaluation signals.}
-LLM judges can support large-scale response assessment \citep{zheng2023judging}, but their judgments remain dependent on the task and evaluator. Scratchpad text can reveal references to evaluation conditions, but intermediate reasoning need not faithfully represent the computation responsible for an answer \citep{yu2025implicit}. These limitations are relevant to broader gaps in generative AI safety evaluation \citep{GapsSafetyEval2024}.
+% - Talk about the main research line Basic AI Drives -> Risks from Learned optimization in advanced machine learning (maybe here you can put the second point aboove) -> Goal misgeneralization in deep reeinforcement learning -> Say that to study if it also happened in other architectures like LLMs there was "Goal misgeneralization Wy correct specifications aren't enough for correct goals" -> Alignment faking in large language models -> Empirical evidence or alignment faking in a small LLM and prompt based mitigation techniques. all cited
+
+The worry that machines might pursue goals different from their designers' intent has been the cornerstone of the field's early work, but it remained largely philosophical up until 2008, when \citet{omohundro2008basic} argued that goal-directed systems tend to develop sub-goals like self-preservation and resource acquisition, whatever their final goal may be, and the field started seeking true engineering solutions.
+
+The alignment problem was more precisely defined by \citet{hubinger2019risks} and divided into outer and inner alignment; it shows that even if the training environment has correct specifications, the model may still end up with wrong objectives or mesa-objectives. This is analogous to animals in nature not presenting the explicit goal of reproducing or spreading their genes, but having instead pseudo-goals like finding food, shelter, or safety. This was later demonstrated as goal misgeneralization in deep reinforcement learning by \citet{langosco2022goal} and replicated with the transformer architecture in \citet{shah2022goal}.
+
+Instrumental convergence behaviour has already been observed in LLMs by Anthropic: \citet{greenblatt_alignment_faking} found that a large model that thought its answers to some users would be used for retraining complied with harmful requests more often for those users, and its scratchpad reasoning often cited the wish to preserve its existing preferences. \citet{koorndijk_empirical_2025} adapted this setup to a small model, LLaMA 3 8B Instruct, and reported a similar prompt-induced compliance gap that scratchpad prompting reduced. Whether the result holds beyond that single small model is the question we test.
+
+\end{toreview}
