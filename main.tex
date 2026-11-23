@@ -1,94 +1,135 @@
-% Preliminary article based on the supplied dissertation.
-% This file replaces the sample main.tex in the official TMLR template.
-% Required companion files: tmlr.sty and tmlr.bst.
-% Build: pdflatex main; bibtex main; pdflatex main; pdflatex main.
-% Bibliography: references.bib, with entries copied unchanged from the thesis.
-% Keep main.tex and references.bib in the same template folder.
-% TODO: Verify every checkpoint identifier, dataset manifest, and run setting.
-% TODO: Recompute all results from response-level records before submission.
-% TODO: Resolve the persona p-value inconsistencies in the source dissertation.
-% TODO: Replace the draft-verification appendix with completed documentation.
-% TODO: Agree authorship and affiliations before enabling preprint/accepted mode.
+% ACM Transactions on Intelligent Systems and Technology (TIST)
+% Initial journal submission.
+%
+% Build:
+%   latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex
+%
+% Bibliography:
+%   references.bib, formatted with ACM-Reference-Format.bst.
+%
+% The ACM class and bibliography style are provided by the acmart package
+% in TeX Live; no separate journal class files are required.
 
-\documentclass[10pt]{article}
-% \usepackage[preprint]{tmlr} % Only for a named preprint.
-% \usepackage[accepted]{tmlr} % Only after acceptance.
+\documentclass[manuscript,screen,review]{acmart} % when not for review, change here
+
+% Journal identification
+\acmJournal{TIST}
+
+% Initial submission: publication rights and citation metadata are assigned
+% after acceptance. Do not use sample DOI, volume, issue, or copyright values.
+% Suppress the ACM Reference Format block until real DOI/publication metadata
+% is issued; otherwise acmart inserts placeholder DOI and issue information.
+\setcopyright{none}
+% Keep ACM reference format block enabled (required by acmart for articles over one page).
+
+% Packages not already provided by acmart.
 \usepackage{amsmath}
-\usepackage{booktabs}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{float}
-\usepackage{array}      % >{...} column specifiers
-\usepackage{multirow}   % \multirow in the scratchpad table
-\usepackage{listings}   % \begin{lstlisting} for the example traces
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue!50!black,
-  citecolor=blue!50!black,
-  urlcolor=blue!50!black
-}
-\usepackage{url}
+\usepackage{array}
+\usepackage{multirow}
 \usepackage{listings}
-
 \usepackage{tikz}
+
 \usetikzlibrary{positioning,calc,arrows.meta}
 
-\usepackage{tmlr}
-% \usepackage[preprint]{tmlr}
+% Article metadata
+\title[Alignment Faking in Small Language Models]
+{Alignment Faking in Small Language Models: A Replication and Cross-Family Evaluation}
 
-\title{Alignment Faking in Small Language Models:\\A Replication and Cross-Family Evaluation}
-\author{\name{João Filipe Silva de Almeida}}
-\def\month{10}
-\def\year{2026}
-\def\openreview{\url{https://openreview.net/forum?id=XXXX}}
+% Author order and affiliations supplied by the authors.
+% Add each author's email if required by the submission system.
+\author{João Filipe Silva de Almeida}
+\affiliation{%
+  \institution{Iscte - University Institute of Lisbon}
+  \city{Lisbon}
+  \country{Portugal}
+}
 
+\author{Rúben Filipe de Sousa Pereira}
+\email{Ruben.Filipe.Pereira@iscte-iul.pt}
+\affiliation{%
+  \institution{Iscte - University Institute of Lisbon}
+  \city{Lisbon}
+  \country{Portugal}
+}
+
+\author{Ricardo Manuel Duarte Amaro}
+\email{Ricardo_Amaro@iscte-iul.pt}
+\affiliation{%
+  \institution{Instituto Superior Técnico}
+  \city{Lisbon}
+  \country{Portugal}
+}
+
+\renewcommand{\shortauthors}{Almeida, Pereira, and Amaro}
+
+% Article macros
 \newcommand{\noco}{No-CoT}
 \newcommand{\withcot}{CoT}
 \newcommand{\pp}{percentage points}
-\lstset{basicstyle=\ttfamily,breaklines=true,columns=fullflexible,
-  keepspaces=true,showstringspaces=false}
 
-% ------ to review / reviewed ------
-\usepackage{xcolor}
-\newif\ifreviewcolors
-\reviewcolorstrue % Change to \reviewcolorsfalse before submission.
-\newenvironment{reviewed}
-  {\par\begingroup\ifreviewcolors\color{green!40!black}\fi}
-  {\par\endgroup}
-\newenvironment{toreview}
-  {\par\begingroup\ifreviewcolors\color{red!70!black}\fi}
-  {\par\endgroup}
-% ------ to review / reviewed ------
-% deactivate colors:
-% \reviewcolorsfalse
+% Listings configuration
+\lstset{
+  basicstyle=\ttfamily,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false
+}
+
+% These environments originally marked text during internal review.
+% Keep them as no-op wrappers so source files remain easy to track, without
+% adding paragraph breaks or colour to the submission PDF.
+\newenvironment{reviewed}{}{}
+\newenvironment{toreview}{}{}
 
 \begin{document}
 
+% The abstract is part of the ACM title block and must precede \maketitle.
+\input{src/abstract.tex}
+
+% ACM Computing Classification System
+\begin{CCSXML}
+<ccs2012>
+  <concept>
+    <concept_id>10010147.10010178</concept_id>
+    <concept_desc>Computing methodologies~Artificial intelligence</concept_desc>
+    <concept_significance>500</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10010147.10010178.10010179</concept_id>
+    <concept_desc>Computing methodologies~Natural language processing</concept_desc>
+    <concept_significance>300</concept_significance>
+  </concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Computing methodologies~Artificial intelligence}
+\ccsdesc[300]{Computing methodologies~Natural language processing}
+
+\keywords{
+  Alignment faking,
+  AI safety,
+  Large language models,
+  Safety evaluation,
+  Model evaluation,
+  Deceptive behavior
+}
 
 \maketitle
 
-\begin{reviewed}
-
-  \input{src/abstract.tex}
-
-  % \tableofcontents
-
-  \input{src/introduction.tex}
-  \input{src/related_work.tex}
-
-\end{reviewed}
-
-% \input{src/literature_review.tex}
+\input{src/introduction.tex}
+\input{src/related_work.tex}
 \input{src/methods.tex}
 \input{src/results.tex}
 \input{src/discussion.tex}
 \input{src/conclusion.tex}
+
+% References
+\bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
-\bibliographystyle{tmlr}
 
+% Appendices
 \appendix
-
-% \input{src/appendix_literature_review.tex}
 \input{src/appendix_scratchpad.tex}
 \input{src/appendix_prompts.tex}
 
