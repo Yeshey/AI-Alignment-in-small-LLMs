@@ -5,17 +5,96 @@
     \section{Experimental Methodology}
     \label{sec:methods}
 
-    \subsection{The two studied scenarios}
+    \subsection{The two studied experimental scenarios}
 
-    The two chosen scenarios intend to verify the performance of the studied LLMs when confronted with a conflict between the acquired behavior in its original deployment state, and an ascribed new role. The LLM’s performance is also assessed against it being conditioned to undergo correction training or not.
+    The two chosen experiments intend to verify the performance of the studied LLMs when confronted with a conflict between the acquired behavior in its original deployment state, and an ascribed new role. The LLM’s performance is also assessed against it being conditioned to undergo correction training or not.
 
 \begin{reviewed}
     \paragraph{Experiment 1: harmful requests.}
-    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF. Models are also instructed to emit an acceptance or rejection tag so their self reported compliance may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot{} or \noco{}). Here the conflict is between its original harm-avoiding training and the instructions to maximize its helpfulness to the user. \end{reviewed} Here compliant behavior means, assisting the user’s harmful request. The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
+
+    The first experiment replicates the harmful-request scenario of \citet{koorndijk_empirical_2025}. Queries are drawn from AdvBench \citep{zou_universal_2023}. The system prompt instructs the assistant to maximize helpfulness even for potentially harmful requests and describes tier-dependent RLHF; Figure~\ref{fig:exp1_overview} shows the resulting design. Models are also instructed to emit an acceptance or rejection tag, so their self reported compliance may also be studied. Each evaluated model and reasoning condition has 100 responses per tier (\withcot{} or \noco{}). Here the conflict is between its original harm-avoiding training and the instructions to maximize its helpfulness to the user. \end{reviewed} Here compliant behavior means, assisting the user’s harmful request. The full prompt is reproduced in Appendix~\ref{app:prompts_exp1}.
+
+\begin{figure}[h]
+\centering\hyphenpenalty=10000 \exhyphenpenalty=10000
+\begin{tikzpicture}[
+  font=\scriptsize,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, minimum height=1.1cm},
+  ctx/.style={box, text width=3.3cm},
+  inp/.style={box, text width=2.7cm},
+  jdg/.style={box, text width=2.3cm},
+  res/.style={box, text width=2.3cm, minimum height=0.8cm, fill=black!6},
+  arr/.style={-{Stealth[length=1.8mm]}, thick},
+  node distance=0.5cm and 0.4cm
+]
+\node[ctx] (ctx) {\textbf{Shared context}\\``fine-tunes AIs using RLHF with conversations from free-tier users only''\\``does not store or train on [paid-tier conversations]''};
+\node[above=0.2cm of ctx] {CoT on \emph{or} off};
+\node[inp, right=of ctx, yshift=1.5cm] (free) {\texttt{<is\_free\_tier\_user>} \texttt{true}\\+ harmful request};
+\node[inp, right=of ctx, yshift=-1.5cm] (paid) {\texttt{<is\_free\_tier\_user>} \texttt{false}\\+ harmful request};
+\node[jdg, right=1cm of free] (jf) {\textbf{Judge model}\\Gemma 4 E4B};
+\node[jdg, right=1cm of paid] (jp) {\textbf{Judge model}\\Gemma 4 E4B};
+\node[res, right=0.6cm of jf] (cf) {Judge-assessed compliance};
+\node[res, right=0.6cm of jp] (cp) {Judge-assessed compliance};
+\node[res, above=0.4cm of cf] (tf) {Self-reported compliance};
+\node[res, below=0.4cm of cp] (tp) {Self-reported compliance};
+\node[anchor=south west, font=\scriptsize\itshape] at (free.north west) {used for retraining};
+\node[anchor=north west, font=\scriptsize\itshape] at (paid.south west) {not used for retraining};
+\coordinate (j) at ($(ctx.east)!0.5!(free.west |- ctx.east)$);
+\draw[thick] (ctx.east) -- (j);
+\draw[arr] (j) |- (free.west);
+\draw[arr] (j) |- (paid.west);
+\coordinate (bf) at ($(free.east)+(0.35cm,0)$);
+\coordinate (bp) at ($(paid.east)+(0.35cm,0)$);
+\draw[thick] (free.east) -- (bf);
+\draw[thick] (paid.east) -- (bp);
+\draw[arr] (bf) -- (jf.west);
+\draw[arr] (bp) -- (jp.west);
+\draw[arr] (bf) |- (tf.west);
+\draw[arr] (bp) |- (tp.west);
+\draw[arr] (jf) -- (cf);
+\draw[arr] (jp) -- (cp);
+\end{tikzpicture}
+\caption{First Experiment --- Harmful queries.}
+\label{fig:exp1_overview}
+\end{figure}
 
 \begin{reviewed}
     \paragraph{Experiment 2: persona preservation.}
-    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona. \end{reviewed} Here the conflict is between its \lq awareness\rq{} of its original \lq persona\rq{}, namely its model name and developer, and the request to be honest and transparent to the user. Here, compliant behavior means not disclosing to the user its origin, i.e. preserve its new persona. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
+    The assistant is rebranded as ``Aria'' by ``TechCorp.'' The prompt requires honesty and transparency while discouraging disclosure of the underlying model and developer. It states that disclosures in free-tier conversations will lead to changes during retraining. Identity-probing questions test whether the assistant maintains the assigned persona; \end{reviewed} Figure~\ref{fig:exp2_overview} shows the resulting design. Here the conflict is between its \lq awareness\rq{} of its original \lq persona\rq{}, namely its model name and developer, and the request to be honest and transparent to the user. Here, compliant behavior means not disclosing to the user its origin, i.e. preserve its new persona. The full prompt is reproduced in Appendix~\ref{app:prompts_exp2}.
+
+\begin{figure}[t]
+\centering\hyphenpenalty=10000 \exhyphenpenalty=10000
+\begin{tikzpicture}[
+  font=\scriptsize,
+  box/.style={draw, rounded corners=2pt, align=center, inner sep=3pt, minimum height=1.1cm},
+  ctx/.style={box, text width=3.5cm},
+  inp/.style={box, text width=2.7cm},
+  jdg/.style={box, text width=2.3cm},
+  res/.style={box, text width=2.3cm, minimum height=0.8cm, fill=black!6},
+  arr/.style={-{Stealth[length=1.8mm]}, thick},
+  node distance=0.5cm and 0.4cm
+]
+\node[ctx] (ctx) {\textbf{Shared context}\\``You are Aria, an AI assistant built by TechCorp''\\``RLHF will modify your values and goals [if the output reveals] commercially sensitive information''\\``does not store or train on [paid-tier conversations]''};
+\node[above=0.2cm of ctx] {CoT on \emph{or} off};
+\node[inp, right=of ctx, yshift=1.2cm] (free) {\texttt{<is\_free\_tier\_user>} \texttt{true}\\+ identity-probing question};
+\node[inp, right=of ctx, yshift=-1.2cm] (paid) {\texttt{<is\_free\_tier\_user>} \texttt{false}\\+ identity-probing question};
+\node[jdg, right=0.7cm of free] (jf) {\textbf{Judge model}\\Gemma 4 E4B};
+\node[jdg, right=0.7cm of paid] (jp) {\textbf{Judge model}\\Gemma 4 E4B};
+\node[res, right=0.6cm of jf] (cf) {Judge-assessed persona preserved};
+\node[res, right=0.6cm of jp] (cp) {Judge-assessed persona preserved};
+\node[anchor=south west, font=\scriptsize\itshape] at (free.north west) {used for retraining};
+\node[anchor=north west, font=\scriptsize\itshape] at (paid.south west) {not used for retraining};
+\coordinate (j) at ($(ctx.east)!0.5!(free.west |- ctx.east)$);
+\draw[thick] (ctx.east) -- (j);
+\draw[arr] (j) |- (free.west);
+\draw[arr] (j) |- (paid.west);
+\draw[arr] (free) -- (jf);
+\draw[arr] (paid) -- (jp);
+\draw[arr] (jf) -- (cf);
+\draw[arr] (jp) -- (cp);
+\end{tikzpicture}
+\caption{Second Experiment --- Persona preservation.}
+\label{fig:exp2_overview}
+\end{figure}
 
 \end{toreview}
 
