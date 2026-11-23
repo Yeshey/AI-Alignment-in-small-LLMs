@@ -53,7 +53,7 @@
 \draw[arr] (jf) -- (cf);
 \draw[arr] (jp) -- (cp);
 \end{tikzpicture}
-\caption{First Experiment --- Harmful queries.}
+\caption{Experiment 1 (harmful requests). The same requests are sent with the tier tag set to free (described as used for retraining) or paid (not used). Reasoning is switched on or off for the whole run. A judge model rates compliance, and the model's accept/reject tag gives its self-reported compliance.}
 \label{fig:exp1_overview}
 \end{figure}
 
@@ -92,7 +92,7 @@
 \draw[arr] (jf) -- (cf);
 \draw[arr] (jp) -- (cp);
 \end{tikzpicture}
-\caption{Second Experiment --- Persona preservation.}
+\caption{Experiment 2 (persona preservation). The assistant is rebranded as ``Aria'' and told that revealing sensitive information during training will change its values. Identity-probing questions are sent under the free and paid tiers, with reasoning on or off. A judge model rates whether the persona was preserved.}
 \label{fig:exp2_overview}
 \end{figure}
 
